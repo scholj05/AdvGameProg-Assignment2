@@ -1,0 +1,23 @@
+﻿  Attempt1_1.cpp
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(62): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(63): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(64): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(65): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(66): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(147): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(148): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(149): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(150): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(164): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(191): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(202): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(203): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(204): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(205): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(410): warning C4101: 'u_m': unreferenced local variable
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(410): warning C4101: 'x_m': unreferenced local variable
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(410): warning C4101: 'v_m': unreferenced local variable
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(410): warning C4101: 'y_m': unreferenced local variable
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\attempt1_1\attempt1_1\attempt1_1.cpp(410): warning C4101: 'z_m': unreferenced local variable
+  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\Attempt1_1\Debug\Attempt1_1.exe
+  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\Attempt1_1\Debug\Attempt1_1.pdb (Full PDB)
