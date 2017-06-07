@@ -10,11 +10,12 @@ Camera::Camera(float x, float y, float z, float direction)
 
 	this->xRotation = 0.0f;
 	this->yRotation = 0.0f;
-	this->zRotation += direction;
+	this->zRotation += 0.0f;//direction;
 
 	this->xVector = glm::vec3(1.0f, 0.0f, 0.0f);
 	this->yVector = glm::vec3(0.0f, 1.0f, 0.0f);
 	this->zVector = glm::vec3(0.0f, 0.0f, 1.0f);
+	Roll(270);
 }
 
 
