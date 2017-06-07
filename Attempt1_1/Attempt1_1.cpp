@@ -2,6 +2,8 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
+#include "Camera.h"
+#include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
 #include <random>
@@ -19,8 +21,8 @@ float zpos;
 float flightSpeed = 1;
 
 GLfloat	yaw = 1 * piover180;				// Y Rotation
-GLfloat pitch = 0.0f;
-GLfloat roll = 0.0f;
+GLfloat pitch = 0.0f;                       // X Rotation
+GLfloat roll = 0.0f;                        // Z Rotation
 GLfloat	z = 0.0f;				// Depth Into The Screen
 
 class UI
@@ -118,6 +120,35 @@ class Mesh
 	private:
 		std::vector<GLfloat> vectorBuffer;
 		std::vector<GLint> facesIndex;
+		///https://gamedev.stackexchange.com/questions/37389/diamond-square-terrain-generation-problem
+		/*void DiamondSquare(unsigned x1, unsigned y1, unsigned x2, unsigned y2, float range, unsigned level) {
+			if (level < 1) return;
+
+			// diamonds
+			for (unsigned i = x1 + level; i < x2; i += level)
+				for (unsigned j = y1 + level; j < y2; j += level) {
+					float a = heightmap[i - level][j - level];
+					float b = heightmap[i][j - level];
+					float c = heightmap[i - level][j];
+					float d = heightmap[i][j];
+					float e = heightmap[i - level / 2][j - level / 2] = (a + b + c + d) / 4 + GetRnd() * range;
+				}
+
+			// squares
+			for (unsigned i = x1 + 2 * level; i < x2; i += level)
+				for (unsigned j = y1 + 2 * level; j < y2; j += level) {
+					float a = heightmap[i - level][j - level];
+					float b = heightmap[i][j - level];
+					float c = heightmap[i - level][j];
+					float d = heightmap[i][j];
+					float e = heightmap[i - level / 2][j - level / 2];
+
+					float f = heightmap[i - level][j - level / 2] = (a + c + e + heightmap[i - 3 * level / 2][j - level / 2]) / 4 + GetRnd() * range;
+					float g = heightmap[i - level / 2][j - level] = (a + b + e + heightmap[i - level / 2][j - 3 * level / 2]) / 4 + GetRnd() * range;
+				}
+
+			DiamondSquare(x1, y1, x2, y2, range / 2, level / 2);
+		}*/
 
 		void square(int x, int y, int size, float* heightmap[], float displacement)
 		{
@@ -136,10 +167,10 @@ class Mesh
 			float bottom_left = heightmap[x + size - 1][y];
 			float bottom_right = heightmap[x + size - 1][y + size - 1];
 
-			float a = top_left + center + top_right / 3.0f;
-			float b = top_left + center + bottom_left / 3.0f;
-			float c = top_right + center + bottom_right / 3.0f;
-			float d = bottom_left + center + bottom_right / 3.0f;
+			float a = top_left + center + top_right / 8.0f;
+			float b = top_left + center + bottom_left / 8.0f;
+			float c = top_right + center + bottom_right / 8.0f;
+			float d = bottom_left + center + bottom_right / 8.0f;
 
 			//  a
 			//b   c
@@ -161,16 +192,16 @@ class Mesh
 
 			float average = (top_left + bottom_left + top_right + bottom_right) / 4.0f;
 
-			heightmap[x + half_size][y + half_size] = average + normal(generator)*displacement;
+			heightmap[x + half_size][y + half_size] = double(average + normal(generator)*displacement);
 
 			square(x, y, size, heightmap, displacement);
 
 			if (half_size > 1)
 			{
-				diamond(x, y, half_size + 1, heightmap, displacement / 3.0f);
-				diamond(x + half_size, y, half_size + 1, heightmap, displacement / 3.0f);
-				diamond(x, y + half_size, half_size + 1, heightmap, displacement / 3.0f);
-				diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / 3.0f);
+				diamond(x, y, half_size + 1, heightmap, displacement / 8.0f);
+				diamond(x + half_size, y, half_size + 1, heightmap, displacement / 8.0f);
+				diamond(x, y + half_size, half_size + 1, heightmap, displacement / 8.0f);
+				diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / 8.0f);
 			}
 		}
 	public:
@@ -188,7 +219,7 @@ class Mesh
 		}
 		Mesh()
 		{
-			int sides = pow(2, 8) + 1;
+			int sides = int(pow(2, 8) + 1);
 
 			// note this is not the most efficient way of allocating a 2D array but it does allow us to use the
 			// already familiar subscript operators as usual
@@ -199,10 +230,10 @@ class Mesh
 				heightmap[i] = new float[sides];
 			}
 
-			heightmap[0][0] = 0.0001;
-			heightmap[sides - 1][0] = 0.0001;
-			heightmap[0][sides - 1] = 0.0001;
-			heightmap[sides - 1][sides - 1] = 0.0001;
+			heightmap[0][0] = double(5.0001);
+			heightmap[sides - 1][0] = double(2.0001);
+			heightmap[0][sides - 1] = double(0.0001);
+			heightmap[sides - 1][sides - 1] = double(3.5001);
 
 			// left-right
 			diamond(0, 0, sides, heightmap, 1.0f);
@@ -325,18 +356,20 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
+	Camera camera(0.0f, 0.0f, 0.0f, 100.0f);
+
 	Mesh cube;
 
 	UI gameUI;
 	gameUI.Setup(window);
 
+	// bool for debugging. if false, the call to keep moving forward will not happen.
+	bool moveForward = true;
 
 	// Start game loop
 	while (window.isOpen())
 	{
-		xpos -= (float)sin(heading*piover180) * flightSpeed;
-		ypos -= (float)sin(pitch * piover180) * flightSpeed;
-		zpos -= (float)cos(heading*piover180) * flightSpeed;
+	
 
 		/// do input checks outside of sf event to avoid 'first key stutter'
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
@@ -347,14 +380,12 @@ int main()
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
 		{
-			heading += 1.0f;
-			yaw = heading;
+			camera.Yaw(0.1f);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
 		{
-			heading -= 1.0f;
-			yaw = heading;
+			camera.Yaw(-0.1f);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
@@ -365,32 +396,40 @@ int main()
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 		{
-			pitch += 0.5f;
+			camera.Pitch(-0.2f);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 		{
-			pitch -= 0.5f;
+			camera.Pitch(0.2f);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 		{
-			roll += 0.5f;
+			camera.Roll(0.2f);
 		}
 
 		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 		{
-			roll -= 0.5f;
+			camera.Roll(-0.2f);
 		}
 
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
+		{
+			if (moveForward)
+				moveForward = false;
+			else
+				moveForward = true;
+		}
 
-		/// keep forward movement constant
-		//z += zSpeed;
+		if (moveForward)
+			camera.Advance(-flightSpeed);
+
+
 		// Process events
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			// Close window : exit
 			if (event.type == sf::Event::Closed)
 				window.close();
 
@@ -407,24 +446,15 @@ int main()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
 
-		GLfloat x_m, y_m, z_m, u_m, v_m;
-		GLfloat xtrans = -xpos;
-		GLfloat ztrans = -zpos;
-		GLfloat ytrans = -ypos;
-
-		glRotatef(pitch, 1.0f, 0, 0);
-		glRotatef(360.0f - yaw, 0, 1.0f, 0);
-		glRotatef(roll, 0, 0, 1.0f);
-		printf("%f\n", roll);
-
-		glTranslatef(xtrans, ytrans, ztrans);
+		glm::mat3 cameraMatrix3 = camera.Place();
+		gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
+				cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
+				cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
 
 		glewInit();
 
 		glEnable(GL_PRIMITIVE_RESTART);
 		glPrimitiveRestartIndex(0xff);
-		
-		glTranslatef(0.f, 0.f, z);
 
 		cube.render();
 
