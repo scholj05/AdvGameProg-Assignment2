@@ -136,7 +136,7 @@ class Mesh
 			return initialHeight;
 		}
 
-		void square(int x, int y, int size, float* heightmap[], float displacement)
+		void square(int x, int y, int size, float* heightmap[], float displacement, int sides)
 		{
 			int half_size = size / 2;
 
@@ -148,8 +148,6 @@ class Mesh
 			float top_left = heightmap[x][y];
 			float top_right = heightmap[x][y + size - 1];
 			float center = heightmap[x + half_size][y + half_size];
-
-
 			float bottom_left = heightmap[x + size - 1][y];
 			float bottom_right = heightmap[x + size - 1][y + size - 1];
 
@@ -161,14 +159,22 @@ class Mesh
 			//  a
 			//b   c
 			//  d
-			
-			heightmap[x][y + half_size] = heightBoundCheck(a + normal(generator)*displacement); // a
-			heightmap[x + half_size][y] = heightBoundCheck(b + normal(generator)*displacement); // b
-			heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + normal(generator)*displacement); // c
-			heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + normal(generator)*displacement); // d
+
+			//check if on the edge of the grid. If above water level (0), set to 0 to avoid gaping edges
+			if (x == 0)	heightmap[x][y + half_size] = 0; 
+			else heightmap[x][y + half_size] = heightBoundCheck(a + normal(generator)*displacement); // a
+
+			if (y == 0) heightmap[x + half_size][y] = 0;
+			else heightmap[x + half_size][y] = heightBoundCheck(b + normal(generator)*displacement); // b
+
+			if (x > 0) heightmap[x + half_size][y + size - 1] = 0;
+			else heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + normal(generator)*displacement); // c
+
+			if (y > 0) heightmap[x + size - 1][y + half_size] = 0;
+			else heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + normal(generator)*displacement); // d
 		}
 
-		void diamond(int x, int y, int size, float* heightmap[], float displacement)
+		void diamond(int x, int y, int size, float* heightmap[], float displacement, int sides)
 		{
 			int half_size = size / 2;
 
@@ -181,22 +187,22 @@ class Mesh
 			
 			heightmap[x + half_size][y + half_size] = heightBoundCheck(average + normal(generator)*displacement);
 
-			square(x, y, size, heightmap, displacement);
+			square(x, y, size, heightmap, displacement, sides);
 
 			if (half_size > 1)
 			{
-				diamond(x, y, half_size + 1, heightmap, displacement / 1.2f);
-				diamond(x + half_size, y, half_size + 1, heightmap, displacement / 1.2f);
-				diamond(x, y + half_size, half_size + 1, heightmap, displacement / 1.2f);
-				diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / 1.2f);
+				diamond(x, y, half_size + 1, heightmap, displacement / 1.2f, sides);
+				diamond(x + half_size, y, half_size + 1, heightmap, displacement / 1.2f, sides);
+				diamond(x, y + half_size, half_size + 1, heightmap, displacement / 1.2f, sides);
+				diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / 1.2f, sides);
 			}
 		}
 
 		void Smooth(float* heightmap[], int sides)
 		{
-			for (int i = 0; i < sides; ++i)
+			for (int i = 1; i < sides; ++i)
 			{
-				for (int j = 0; j < sides; ++j)
+				for (int j = 1; j < sides; ++j)
 				{
 					
 					float aa = heightmap[(i - 1 + sides) % sides][(j - 1 + sides) % sides];
@@ -210,7 +216,8 @@ class Mesh
 					float cc = heightmap[(i + 1 + sides) % sides][(j + 1 + sides) % sides];
 
 					float average = (aa + ab + ac + ba + bb + bc + ca + cb + cc) / 9;
-					heightmap[i][j] = average;
+					if (i == sides - 1 || j == sides - 1) heightmap[i][j] = 0;
+					else heightmap[i][j] = average;
 				}
 			}
 		}
@@ -246,7 +253,7 @@ class Mesh
 			heightmap[sides - 1][sides - 1] = double(0.0000);
 
 			
-			diamond(0, 0, sides, heightmap, 2.0f);
+			diamond(0, 0, sides, heightmap, 2.0f, sides);
 			
 			/// run the smooth function x number of times
 			for (int i = 0; i < 3; i++)
