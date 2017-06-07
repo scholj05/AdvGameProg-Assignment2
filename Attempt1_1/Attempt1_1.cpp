@@ -371,7 +371,6 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
-	Camera camera(0.0f, 100.0f, 500.0f, 100.0f);
 
 	min_height = -20.0;
 	max_height = 3000.0;
@@ -379,6 +378,8 @@ int main()
 
 	UI gameUI;
 	gameUI.Setup(window);
+
+	Camera camera(0.0f, 5000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	bool moveForward = true;

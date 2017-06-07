@@ -3,7 +3,7 @@
 class Camera
 {
 public:
-	Camera(float x, float y, float z, float direction);
+	Camera(float x, float y, float z, float pitch, float yaw, float roll);
 	~Camera();
 
 	void Camera::Pitch(float angle);
@@ -11,6 +11,10 @@ public:
 	void Camera::Roll(float angle);
 
 	void Camera::Advance(float distance);
+
+	void Ascend(float distance);
+
+	void Strafe(float distance);
 
 	glm::mat3 Camera::Place();
 
