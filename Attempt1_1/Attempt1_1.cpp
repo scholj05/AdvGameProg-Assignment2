@@ -13,8 +13,8 @@
 std::random_device rd;
 std::mt19937 generator(rd());
 //std::uniform_real_distribution<double> normal(-10.0f, 300.0f);
-std::normal_distribution<double> normal(1.0, 1000.0);
-//std::lognormal_distribution<double> normal(1.0, 2.5);
+//std::normal_distribution<double> normal(1.0, 1000.0);
+std::lognormal_distribution<double> normal(1.0, 3.5);
 
 const float piover180 = 0.0174532925f;
 float heading;
@@ -217,7 +217,7 @@ class Mesh
 
 					float average = (aa + ab + ac + ba + bb + bc + ca + cb + cc) / 9;
 					if (i == sides - 1 || j == sides - 1) heightmap[i][j] = 0;
-					else heightmap[i][j] = average;
+					else heightmap[i][j] = (heightmap[i][j] + average) / 2;
 				}
 			}
 		}
@@ -323,6 +323,7 @@ class Mesh
 			
 			glVertexPointer(3, GL_FLOAT, 0, &vectorBuffer[0]);
 
+
 			glDrawElements(GL_TRIANGLE_STRIP, facesIndex.size(), GL_UNSIGNED_INT, &facesIndex[0]);
 			
 			glDisableClientState(GL_VERTEX_ARRAY);
@@ -358,7 +359,7 @@ int main()
 	GLdouble fovY = 90;
 	GLdouble aspect = 1.0f;
 	GLdouble zNear = 5.0f; 
-	GLdouble zFar = 100000.0f;
+	GLdouble zFar = 10000.0f;
 
 	const GLdouble pi = 3.1415926535897932384626433832795;
 	GLdouble fW, fH;
