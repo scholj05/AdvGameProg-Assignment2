@@ -5,10 +5,16 @@
 #include "Camera.h"
 #include "HeightMap.h"
 #include "Overlay.h"
+#include "Menu.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
 #include <vector>
+
+void HandleInput()
+{
+
+}
 
 int main()
 {
@@ -17,8 +23,15 @@ int main()
 	settings.stencilBits = 8;           // Request a 8 bits stencil buffer
 	settings.antialiasingLevel = 2; // Request 2 levels of antialiasing
 
+	
 	// Use SFML to handle the window for us
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Default, settings);
+
+	Menu menu(window);
+	if (!menu.Run())
+		window.close();
+	window.clear();
+	bool drawMenu = false;
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // nicest perspective correction calculations
 
@@ -47,17 +60,17 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
-	double vectors = pow(2, 8) + 1;
-	HeightMap heightmap(vectors, 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
+	HeightMap heightmap((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
 	heightmap.GenerateHeightMap();
 
 	Overlay gameUI;
 	gameUI.Setup(window);
 
-	Camera camera(0.0f, 5000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+	Camera camera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
 	float flightSpeed = 1;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
+	sf::Clock keyTimeout;
 	bool moveForward = true;
 
 	// Start game loop
@@ -111,14 +124,24 @@ int main()
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 			{
-				if (moveForward)
-					moveForward = false;
-				else
-					moveForward = true;
+				if (keyTimeout.getElapsedTime().asSeconds() > 0.5)
+				{
+					if (moveForward)
+						moveForward = false;
+					else
+						moveForward = true;
+					keyTimeout.restart();
+				}
 			}
 
+			//processing continual movement
 			if (moveForward)
 				camera.Advance(-flightSpeed);
+
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)))
+				drawMenu = true;
+			else
+				drawMenu = false;
 
 		}
 		
@@ -157,6 +180,8 @@ int main()
 
 		window.pushGLStates();
 		gameUI.Draw(window);
+		if (drawMenu)
+			menu.Draw();
 		window.popGLStates();
 
 		window.display();
