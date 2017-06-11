@@ -75,7 +75,6 @@ void Camera::Roll(float angle)
 		this->zVector, this->yVector);
 
 	this->xVector *= -1;
-
 }
 
 
