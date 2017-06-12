@@ -23,14 +23,24 @@ int main()
 	settings.stencilBits = 8;           // Request a 8 bits stencil buffer
 	settings.antialiasingLevel = 2; // Request 2 levels of antialiasing
 
-	
 	// Use SFML to handle the window for us
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Default, settings);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Close, settings);
+
+	// create vars for setting values from the menu
+	int gridSize = 256;
+	int gridWidth = 250;
+	float min_height = -30.0f;
+	float max_height = 1000.0f;
+	HeightMap::RandomNumber random_number = HeightMap::RandomNumber::normalDistribution;
+	float random_min;
+	float random_max;
+	HeightMap::Smoother smoother = HeightMap::Smoother::normalSmoothing;
+	int smoothCount = 0;
+	float offset = 1.2;
 
 	Menu menu(window);
 	if (!menu.Run())
 		window.close();
-	window.clear();
 	bool drawMenu = false;
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // nicest perspective correction calculations
@@ -45,7 +55,7 @@ int main()
 	glMatrixMode(GL_PROJECTION); // Select the builtin projection matrix
 	glLoadIdentity();  // reset the projection matrix by loading the projection identity matrix
 
-	GLdouble fovY = 90;
+	GLdouble fovY = 120;
 	GLdouble aspect = 1.0f;
 	GLdouble zNear = 1.0f; 
 	GLdouble zFar = 100000.0f;
@@ -60,7 +70,19 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
-	HeightMap heightmap((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
+	// ((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
+	HeightMap heightmap(
+		menu.finalGridSize + 1, 
+		menu.finalGridWidth, 
+		menu.finalMinHeight, 
+		menu.finalMaxHeight, 
+		menu.finalSmoother, 
+		menu.finalSmoothCount, 
+		menu.finalNumberGen, 
+		menu.finalNumberGenFirst, 
+		menu.finalNumberGenSecond,
+		menu.finalOffset
+	);
 	heightmap.GenerateHeightMap();
 
 	Overlay gameUI;
@@ -180,8 +202,7 @@ int main()
 
 		window.pushGLStates();
 		gameUI.Draw(window);
-		if (drawMenu)
-			menu.Draw();
+
 		window.popGLStates();
 
 		window.display();
@@ -190,4 +211,4 @@ int main()
 	}
 
 	return EXIT_SUCCESS;
-}
+};

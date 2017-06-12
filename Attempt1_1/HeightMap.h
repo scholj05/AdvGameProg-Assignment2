@@ -17,6 +17,7 @@ public:
 		uniformDistribution
 	};
 
+	HeightMap::HeightMap();
 	HeightMap(int vectorCount, int gridSize, float min, float max, Smoother smooth, 
 		int smoothCount, RandomNumber random, float randomMin, float randomMax, float offset);
 	~HeightMap();
