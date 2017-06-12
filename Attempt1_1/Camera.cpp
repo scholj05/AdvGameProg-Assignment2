@@ -27,8 +27,6 @@ Camera::Camera(float x, float y, float z, float pitch, float yaw, float roll)
 	Pitch(pitch);
 	Yaw(yaw);
 	Roll(roll);
-
-
 }
 
 
@@ -73,12 +71,10 @@ void Camera::Roll(float angle)
 		this->yVector * cosf(angle * piover180) +
 		this->xVector * sinf(angle * piover180));
 	
-
 	this->xVector = glm::cross(
 		this->zVector, this->yVector);
 
 	this->xVector *= -1;
-
 }
 
 
@@ -98,8 +94,6 @@ void Camera::Advance(float distance)
 {
 	this->position += (this->zVector * -distance);
 }
-
-
 
 
 glm::mat3 Camera::Place()
