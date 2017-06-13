@@ -41,6 +41,7 @@ private:
 		MenuData menudata;
 		sf::Text text;
 		bool isHighlighted;
+		int index;
 	};
 	
 	HeightMap heightmap;

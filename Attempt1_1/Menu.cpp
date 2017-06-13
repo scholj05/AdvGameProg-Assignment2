@@ -72,14 +72,14 @@ Menu::Menu(sf::RenderWindow &window)
 
 	txt_numberGenFirst.setFont(textFont);
 	txt_numberGenFirst.setCharacterSize(windowX / 50);
-	txt_numberGenFirst.setString("Min");
+	txt_numberGenFirst.setString("Mean");
 	txt_numberGenFirst.setOrigin(txt_numberGenFirst.getGlobalBounds().width / 2, txt_numberGenFirst.getGlobalBounds().height / 2);
 	txt_numberGenFirst.setPosition(windowX / 4 * 3 - txt_numberGenFirst.getGlobalBounds().width, windowY / 5 * 2);
 	textList.push_back(txt_numberGenFirst);
 
 	txt_numberGenSecond.setFont(textFont);
 	txt_numberGenSecond.setCharacterSize(windowX / 50);
-	txt_numberGenSecond.setString("Max");
+	txt_numberGenSecond.setString("Sigma");
 	txt_numberGenSecond.setOrigin(txt_numberGenSecond.getGlobalBounds().width / 2, txt_numberGenSecond.getGlobalBounds().height / 2);
 	txt_numberGenSecond.setPosition(windowX / 4 * 3 + txt_numberGenSecond.getGlobalBounds().width, windowY / 5 * 2);
 	textList.push_back(txt_numberGenSecond);
@@ -127,7 +127,7 @@ Menu::Menu(sf::RenderWindow &window)
 	dataList.push_back(data_heightMin);
 
 	data_heightMax.isHighlighted = false;
-	data_heightMax.menudata = MenuData(MenuData::DataType::MaxHeight, 7);
+	data_heightMax.menudata = MenuData(MenuData::DataType::MaxHeight, 9);
 	data_heightMax.text.setFont(textFont);
 	data_heightMax.text.setCharacterSize(windowX / 75);
 	data_heightMax.text.setString(data_heightMax.menudata.GetCurrentValue());
@@ -136,7 +136,7 @@ Menu::Menu(sf::RenderWindow &window)
 	dataList.push_back(data_heightMax);
 
 	data_numberGen.isHighlighted = false;
-	data_numberGen.menudata = MenuData(MenuData::DataType::NumberGen, 2);
+	data_numberGen.menudata = MenuData(MenuData::DataType::NumberGen, 1);
 	data_numberGen.text.setFont(textFont);
 	data_numberGen.text.setCharacterSize(windowX / 75);
 	data_numberGen.text.setString(data_numberGen.menudata.GetCurrentValue());
@@ -145,7 +145,7 @@ Menu::Menu(sf::RenderWindow &window)
 	dataList.push_back(data_numberGen);
 
 	data_numberGenFirst.isHighlighted = false;
-	data_numberGenFirst.menudata = MenuData(MenuData::DataType::MinGen, 1);
+	data_numberGenFirst.menudata = MenuData(MenuData::DataType::Mean, 0);
 	data_numberGenFirst.text.setFont(textFont);
 	data_numberGenFirst.text.setCharacterSize(windowX / 75);
 	data_numberGenFirst.text.setString(data_numberGenFirst.menudata.GetCurrentValue());
@@ -154,7 +154,7 @@ Menu::Menu(sf::RenderWindow &window)
 	dataList.push_back(data_numberGenFirst);
 
 	data_numberGenSecond.isHighlighted = false;
-	data_numberGenSecond.menudata = MenuData(MenuData::DataType::MaxGen, 8);
+	data_numberGenSecond.menudata = MenuData(MenuData::DataType::Range, 3);
 	data_numberGenSecond.text.setFont(textFont);
 	data_numberGenSecond.text.setCharacterSize(windowX / 75);
 	data_numberGenSecond.text.setString(data_numberGenSecond.menudata.GetCurrentValue());
@@ -163,7 +163,7 @@ Menu::Menu(sf::RenderWindow &window)
 	dataList.push_back(data_numberGenSecond);
 
 	data_smoothingCount.isHighlighted = false;
-	data_smoothingCount.menudata = MenuData(MenuData::DataType::SmoothCount, 2);
+	data_smoothingCount.menudata = MenuData(MenuData::DataType::SmoothCount, 3);
 	data_smoothingCount.text.setFont(textFont);
 	data_smoothingCount.text.setCharacterSize(windowX / 75);
 	data_smoothingCount.text.setString(data_smoothingCount.menudata.GetCurrentValue());
@@ -228,15 +228,27 @@ bool Menu::Run()
 
 		if (menuEvent.key.code == sf::Keyboard::Return)
 		{
-			finalGridSize = data_gridSize.menudata.GetSelection(1);
-			finalGridWidth = data_gridWidth.menudata.GetSelection(1);
-			finalMinHeight = data_heightMin.menudata.GetSelection(1.0f);
-			finalMaxHeight = data_heightMax.menudata.GetSelection(1.0f);
-			finalSmoother = data_smoothingType.menudata.GetSelection(HeightMap::Smoother::normalSmoothing);
-			finalSmoothCount = data_smoothingCount.menudata.GetSelection(1);
-			finalNumberGen = data_numberGen.menudata.GetSelection(HeightMap::RandomNumber::normalDistribution);
-			finalNumberGenFirst = data_numberGenFirst.menudata.GetSelection(1.0f);
-			finalNumberGenSecond = data_numberGenSecond.menudata.GetSelection(1.0f);
+			for (std::list<Data>::iterator it = dataList.begin(); it != dataList.end(); ++it)
+			{
+				if ((*it).menudata.GetDataType() == MenuData::DataType::GridSize)
+					finalGridSize = (*it).menudata.GetSelection(1);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::GridWidth)
+					finalGridWidth = (*it).menudata.GetSelection(1);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::MinHeight)
+					finalMinHeight = (*it).menudata.GetSelection(1.0f);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::MaxHeight)
+					finalMaxHeight = (*it).menudata.GetSelection(1.0f);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::Smooth)
+					finalSmoother = (*it).menudata.GetSelection(HeightMap::Smoother::aggressiveSmoothing);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::SmoothCount)
+					finalSmoothCount = (*it).menudata.GetSelection(1);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::NumberGen)
+					finalNumberGen = (*it).menudata.GetSelection(HeightMap::RandomNumber::logNormalDistribution);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::Mean)
+					finalNumberGenFirst = (*it).menudata.GetSelection(1.0f);
+				if ((*it).menudata.GetDataType() == MenuData::DataType::Range)
+					finalNumberGenSecond = (*it).menudata.GetSelection(1.0f);
+			}
 			finalOffset = 1.2f;
 			return true;
 		}
@@ -252,6 +264,10 @@ bool Menu::Run()
 						if (menuEvent.mouseWheel.delta > 0)
 						{
 							(*it).text.setString(std::string((*it).menudata.GetNextValue()));
+						}
+						else if (menuEvent.mouseWheel.delta < 0)
+						{
+							(*it).text.setString(std::string((*it).menudata.GetPrevValue()));
 						}
 					}
 				}

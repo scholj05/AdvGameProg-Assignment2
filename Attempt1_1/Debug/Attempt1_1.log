@@ -1,5 +1,4 @@
-﻿  MenuData.cpp
-  Menu.cpp
+﻿  Menu.cpp
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -13,13 +12,6 @@ c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(180): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(266): warning C4715: 'Menu::Run': not all control paths return a value
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menudata.cpp(154): warning C4715: 'MenuData::GetCurrentValue': not all control paths return a value
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menudata.cpp(123): warning C4715: 'MenuData::GetNextValue': not all control paths return a value
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menudata.cpp(240): warning C4715: 'MenuData::GetSelection': not all control paths return a value
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menudata.cpp(246): warning C4715: 'MenuData::GetSelection': not all control paths return a value
-  Skipping... (no relevant changes detected)
-  Attempt1_1.cpp
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\menu.cpp(282): warning C4715: 'Menu::Run': not all control paths return a value
   Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
   Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)

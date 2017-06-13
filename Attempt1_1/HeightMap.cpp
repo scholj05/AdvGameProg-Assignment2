@@ -8,12 +8,10 @@ HeightMap::HeightMap()
 HeightMap::HeightMap(int vectors, int gridSize, float min, float max, Smoother smooth, int smoothCount, RandomNumber random, float randomA, float randomB, float offset)
 {
 	generator = std::mt19937(rd());
-	//if (random == RandomNumber::uniformDistribution)
-		uniformReal = std::uniform_real_distribution<double>(randomA, randomB);			// -10.0, 300.0
-	//else if (random == RandomNumber::normalDistribution)
-		//normal = std::normal_distribution<double>(double(randomA), double(randomB));					// 1.0, 1000.0
-	//else
-		//logNormal = std::lognormal_distribution<double>(randomA, randomB);				// 1.0, 5.5
+	if (random == RandomNumber::normalDistribution)
+		normal = std::normal_distribution<double>(double(randomA), double(randomB));					// 1.0, 1000.0
+	else
+		logNormal = std::lognormal_distribution<double>(randomA, randomB);				// 1.0, 5.5
 	min_height = min;
 	max_height = max;
 	vectorCount = vectors;
@@ -36,8 +34,6 @@ double HeightMap::GetRandomNumber()
 		return normal(generator);
 	else if (randomNumber == RandomNumber::logNormalDistribution)
 		return logNormal(generator);
-	else if (randomNumber == RandomNumber::uniformDistribution)
-		return uniformReal(generator);
 }
 
 

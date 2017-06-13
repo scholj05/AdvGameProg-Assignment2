@@ -13,8 +13,7 @@ public:
 	};
 	enum RandomNumber {
 		normalDistribution,
-		logNormalDistribution,
-		uniformDistribution
+		logNormalDistribution
 	};
 
 	HeightMap::HeightMap();
@@ -37,7 +36,7 @@ private:
 	///random number related vars
 	std::random_device rd;
 	std::mt19937 generator;// (rd());
-	std::uniform_real_distribution<double> uniformReal;//(-10.0f, 300.0f);
+	//std::uniform_real_distribution<double> uniformReal;//(-10.0f, 300.0f);
 	std::normal_distribution<double> normal;//(1.0, 1000.0);
 	std::lognormal_distribution<double> logNormal;// (1.0, 5.5);
 	float min_height;

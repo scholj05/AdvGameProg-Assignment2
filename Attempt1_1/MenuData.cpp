@@ -38,7 +38,7 @@ MenuData::MenuData(DataType type, int arrayIndex)
 
 	case DataType::NumberGen: 
 	{
-		arrayLength = 3;
+		arrayLength = 2;
 		break;
 	}
 
@@ -56,13 +56,13 @@ MenuData::MenuData(DataType type, int arrayIndex)
 
 	case DataType::Mean: 
 	{
-		arrayLength = 10;
+		arrayLength = 9;
 		break;
 	}
 
 	case DataType::Range: 
 	{
-		arrayLength = 12;
+		arrayLength = 18;
 		break;
 	}
 
@@ -89,37 +89,24 @@ MenuData::MenuData(DataType type, int arrayIndex)
 
 sf::String MenuData::GetNextValue()
 {
-	++index;
+	index = (index + 1);
 	if (index % arrayLength == 0)
 		index = 0;
+	return GetCurrentValue();
 
-	switch (dataType)
-	{
-	case (DataType::GridSize):
-		return ValueToString(data_GridSize[index]);
-	case (DataType::GridWidth):
-		return ValueToString(data_GridWidth[index]);
-	case DataType::MinHeight:
-		return ValueToString(data_MinHeight[index]);
-	case DataType::MaxHeight:
-		return ValueToString(data_MaxHeight[index]);
-	case DataType::NumberGen:
-		return ValueToString(data_NumberGen[index]);
-	case DataType::MinGen:
-		return ValueToString(data_MinGen[index]);
-	case DataType::MaxGen:
-		return ValueToString(data_MaxGen[index]);
-	case DataType::Mean:
-		return ValueToString(data_Mean[index]);
-	case DataType::Range:
-		return ValueToString(data_Range[index]);
-	case DataType::Smooth:
-		return ValueToString(data_Smoother[index]);
-	case DataType::SmoothCount:
-		return ValueToString(data_SmoothCount[index]);
-	case DataType::Offset:
-		return ValueToString(data_Offset[index]);
-	}
+}
+
+sf::String MenuData::GetPrevValue()
+{
+	index = (index - 1);
+	if (index < 0)
+		index = arrayLength - 1;
+	return GetCurrentValue();
+}
+
+int MenuData::GetIndex()
+{
+	return index;
 }
 
 sf::String MenuData::GetCurrentValue()
@@ -175,8 +162,6 @@ sf::String MenuData::ValueToString(HeightMap::RandomNumber random)
 		return sf::String("Normal Distribution");
 	case HeightMap::RandomNumber::logNormalDistribution:
 		return sf::String("Lognormal Distribution");
-	case HeightMap::RandomNumber::uniformDistribution:
-		return sf::String("Uniform Distribution");
 	default:
 		return sf::String("Error");
 	}
@@ -193,6 +178,11 @@ sf::String MenuData::ValueToString(HeightMap::Smoother smooth)
 	default:
 		return sf::String("Error");
 	}
+}
+
+MenuData::DataType MenuData::GetDataType()
+{
+	return dataType;
 }
 
 int MenuData::GetSelection(int identifier)
