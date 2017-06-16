@@ -1,5 +1,6 @@
 #pragma once
 #include <glm\glm.hpp>
+#include "SFML\System.hpp"
 class Camera
 {
 public:
@@ -33,5 +34,7 @@ private:
 
 	/// Vector for the global position of the camera in the game world
 	glm::vec3 position;
+
+	sf::Clock tickTime;
 };
 

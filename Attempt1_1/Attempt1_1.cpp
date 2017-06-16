@@ -3,6 +3,7 @@
 #include "SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
 #include "Camera.h"
+#include "QuatCamera.h"
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
@@ -89,6 +90,7 @@ int main()
 	gameUI.Setup(window);
 
 	Camera camera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+	QuatCamera quatCamera(0.0f, 500.0f, 500.0f);
 	float flightSpeed = 1;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
@@ -105,48 +107,49 @@ int main()
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
 			{
 				if (flightSpeed < 5.0f)
-					flightSpeed += 0.01f;
+					flightSpeed += 0.001f;
+
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
 			{
-				camera.Yaw(0.1f);
+				quatCamera.Yaw(0.01f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
 			{
-				camera.Yaw(-0.1f);
+				quatCamera.Yaw(-0.01f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
 			{
-				if (flightSpeed > 1.01f)
-					flightSpeed -= 0.01f;
+				if (flightSpeed > 1.001f)
+					flightSpeed -= 0.001f;
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 			{
-				camera.Pitch(-0.2f);
+				quatCamera.Pitch(-0.02f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			{
-				camera.Pitch(0.2f);
+				quatCamera.Pitch(0.02f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 			{
-				camera.Roll(0.2f);
+				quatCamera.Roll(0.02f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 			{
-				camera.Roll(-0.2f);
+				quatCamera.Roll(-0.02f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 			{
-				if (keyTimeout.getElapsedTime().asSeconds() > 0.5)
+				if (keyTimeout.getElapsedTime().asSeconds() > 0.05)
 				{
 					if (moveForward)
 						moveForward = false;
@@ -158,7 +161,8 @@ int main()
 
 			//processing continual movement
 			if (moveForward)
-				camera.Advance(-flightSpeed);
+				quatCamera.Advance(-flightSpeed);
+				//camera.Advance(-flightSpeed);
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)))
 				drawMenu = true;
@@ -183,10 +187,13 @@ int main()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
 
-		glm::mat3 cameraMatrix3 = camera.Place();
-		gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
-				cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
-				cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+		//glm::mat3 cameraMatrix3 = camera.Place();
+		//gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
+		//		cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
+		//		cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+
+		glm::quat cameraQuat = glm::quat(quatCamera.Update());
+		//gluLookAt(cameraQuat[0], cameraQuat[1], cameraQuat[2], cameraQuat[3]);
 
 		glewInit();
 

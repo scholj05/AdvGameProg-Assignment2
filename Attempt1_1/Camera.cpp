@@ -37,11 +37,11 @@ Camera::~Camera()
 
 void Camera::Pitch(float angle)
 {
-	this->xRotation += angle;
+	this->xRotation += angle* tickTime.getElapsedTime().asMilliseconds();
 
 	this->zVector = glm::normalize(
-		this->zVector * cosf(angle * piover180) +
-		this->xVector * sinf(angle * piover180));
+		this->zVector * cosf(angle * piover180 * tickTime.getElapsedTime().asMilliseconds()) +
+		this->xVector * sinf(angle * piover180 * tickTime.getElapsedTime().asMilliseconds()));
 
 	this->xVector = glm::cross(
 		this->zVector, this->yVector);
@@ -52,11 +52,11 @@ void Camera::Pitch(float angle)
 
 void Camera::Yaw(float angle)
 {
-	this->yRotation += angle;
+	this->yRotation += angle * tickTime.getElapsedTime().asMilliseconds();
 
 	this->zVector = glm::normalize(
-		this->zVector * cosf(angle * piover180) -
-		this->yVector * sinf(angle* piover180));
+		this->zVector * cosf(angle * piover180 * tickTime.getElapsedTime().asMilliseconds()) -
+		this->yVector * sinf(angle* piover180 * tickTime.getElapsedTime().asMilliseconds()));
 
 	this->yVector = glm::cross(
 		this->zVector, this->xVector);
@@ -65,11 +65,11 @@ void Camera::Yaw(float angle)
 
 void Camera::Roll(float angle)
 {
-	this->zRotation += angle;
+	this->zRotation += angle * tickTime.getElapsedTime().asMilliseconds();
 
 	this->yVector = glm::normalize(
-		this->yVector * cosf(angle * piover180) +
-		this->xVector * sinf(angle * piover180));
+		this->yVector * cosf(angle * piover180 * tickTime.getElapsedTime().asMilliseconds()) +
+		this->xVector * sinf(angle * piover180 * tickTime.getElapsedTime().asMilliseconds()));
 	
 	this->xVector = glm::cross(
 		this->zVector, this->yVector);
@@ -80,24 +80,26 @@ void Camera::Roll(float angle)
 
 void Camera::Strafe(float distance)
 {
-	this->position += (this->yVector * distance);
+	this->position += (this->yVector * (distance * tickTime.getElapsedTime().asMilliseconds()));
 }
 
 
 void Camera::Ascend(float distance)
 {
-	this->position += (this->xVector * distance);
+	this->position += (this->xVector * (distance * tickTime.getElapsedTime().asMilliseconds()));
 }
 
 
 void Camera::Advance(float distance)
 {
-	this->position += (this->zVector * -distance);
+	this->position += (this->zVector * -(distance * tickTime.getElapsedTime().asMilliseconds()));
 }
 
 
 glm::mat3 Camera::Place()
 {
+	tickTime.restart();
+	
 	glm::vec3 viewDirection = this->position + this->zVector;
 
 	return glm::mat3(
