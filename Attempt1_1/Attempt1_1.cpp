@@ -113,12 +113,12 @@ int main()
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
 			{
-				quatCamera.Yaw(0.01f);
+				quatCamera.Yaw(0.01f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
 			{
-				quatCamera.Yaw(-0.01f);
+				quatCamera.Yaw(-0.01f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
@@ -129,27 +129,27 @@ int main()
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 			{
-				quatCamera.Pitch(-0.02f);
+				quatCamera.Pitch(-0.1f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			{
-				quatCamera.Pitch(0.02f);
+				quatCamera.Pitch(0.1f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 			{
-				quatCamera.Roll(0.02f);
+				quatCamera.Roll(0.2f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 			{
-				quatCamera.Roll(-0.02f);
+				quatCamera.Roll(-0.2f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 			{
-				if (keyTimeout.getElapsedTime().asSeconds() > 0.05)
+				if (keyTimeout.getElapsedTime().asSeconds() > 0.5)
 				{
 					if (moveForward)
 						moveForward = false;
@@ -161,7 +161,7 @@ int main()
 
 			//processing continual movement
 			if (moveForward)
-				quatCamera.Advance(-flightSpeed);
+				quatCamera.Advance(-flightSpeed, true);
 				//camera.Advance(-flightSpeed);
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)))

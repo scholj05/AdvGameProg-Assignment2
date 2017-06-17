@@ -7,15 +7,15 @@ public:
 	Camera(float x, float y, float z, float pitch, float yaw, float roll);
 	~Camera();
 
-	void Camera::Pitch(float angle);
-	void Camera::Yaw(float angle);
-	void Camera::Roll(float angle);
+	void Camera::Pitch(float angle, bool applyTime);
+	void Camera::Yaw(float angle, bool applyTime);
+	void Camera::Roll(float angle, bool applyTime);
 
-	void Camera::Advance(float distance);
+	void Camera::Advance(float distance, bool applyTime);
 
-	void Ascend(float distance);
+	void Ascend(float distance, bool applyTime);
 
-	void Strafe(float distance);
+	void Strafe(float distance, bool applyTime);
 
 	glm::mat3 Camera::Place();
 
@@ -36,5 +36,6 @@ private:
 	glm::vec3 position;
 
 	sf::Clock tickTime;
+	float targetTickTime = 1.0f / 120;
 };
 
