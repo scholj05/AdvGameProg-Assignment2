@@ -89,8 +89,8 @@ int main()
 	Overlay gameUI;
 	gameUI.Setup(window);
 
-	Camera camera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
-	QuatCamera quatCamera(0.0f, 500.0f, 500.0f);
+	Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+	//QuatCamera quatCamera(0.0f, 500.0f, 500.0f);
 	float flightSpeed = 1;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
@@ -187,12 +187,12 @@ int main()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
 
-		//glm::mat3 cameraMatrix3 = camera.Place();
-		//gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
-		//		cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
-		//		cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+		glm::mat3 cameraMatrix3 = quatCamera.Place();
+		gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
+				cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
+				cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
 
-		glm::quat cameraQuat = glm::quat(quatCamera.Update());
+		//glm::quat cameraQuat = glm::quat(quatCamera.Update());
 		//gluLookAt(cameraQuat[0], cameraQuat[1], cameraQuat[2], cameraQuat[3]);
 
 		glewInit();

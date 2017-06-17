@@ -1,14 +1,11 @@
-﻿  LINK : C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe not found or not built by the last incremental link; performing full link
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall HeightMap::HeightMap(int,int,float,float,enum HeightMap::Smoother,int,enum HeightMap::RandomNumber,float,float,float)" (??0HeightMap@@QAE@HHMMW4Smoother@0@HW4RandomNumber@0@MMM@Z) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall HeightMap::~HeightMap(void)" (??1HeightMap@@QAE@XZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: void __thiscall HeightMap::Render(void)" (?Render@HeightMap@@QAEXXZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: void __thiscall HeightMap::GenerateHeightMap(void)" (?GenerateHeightMap@HeightMap@@QAEXXZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall Overlay::Overlay(void)" (??0Overlay@@QAE@XZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall Overlay::~Overlay(void)" (??1Overlay@@QAE@XZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: void __thiscall Overlay::Setup(class sf::RenderWindow &)" (?Setup@Overlay@@QAEXAAVRenderWindow@sf@@@Z) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: void __thiscall Overlay::Update(float,float,float,float)" (?Update@Overlay@@QAEXMMMM@Z) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: void __thiscall Overlay::Draw(class sf::RenderWindow &)" (?Draw@Overlay@@QAEXAAVRenderWindow@sf@@@Z) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall Menu::Menu(class sf::RenderWindow &)" (??0Menu@@QAE@AAVRenderWindow@sf@@@Z) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: __thiscall Menu::~Menu(void)" (??1Menu@@QAE@XZ) referenced in function _main
-Attempt1_1.obj : error LNK2019: unresolved external symbol "public: bool __thiscall Menu::Run(void)" (?Run@Menu@@QAE_NXZ) referenced in function _main
-C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe : fatal error LNK1120: 12 unresolved externals
+﻿  HeightMap.cpp
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(79): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(85): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(100): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(223): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(37): warning C4715: 'HeightMap::GetRandomNumber': not all control paths return a value
+  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
+  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)

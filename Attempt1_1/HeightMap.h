@@ -33,6 +33,8 @@ private:
 	std::vector<GLfloat> vectorBuffer;
 	std::vector<GLint> facesIndex;
 
+	std::vector<GLfloat> colourBuffer;
+
 	///random number related vars
 	std::random_device rd;
 	std::mt19937 generator;// (rd());
