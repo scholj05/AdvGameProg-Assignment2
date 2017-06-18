@@ -90,12 +90,14 @@ int main()
 	gameUI.Setup(window);
 
 	Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+
 	//QuatCamera quatCamera(0.0f, 500.0f, 500.0f);
 	float flightSpeed = 1;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	sf::Clock keyTimeout;
 	bool moveForward = true;
+	bool firstLoop = true;
 
 	// Start game loop
 	while (window.isOpen())
@@ -160,17 +162,11 @@ int main()
 			}
 
 			//processing continual movement
-			if (moveForward)
+			if (moveForward && !firstLoop)
 				quatCamera.Advance(-flightSpeed, true);
-				//camera.Advance(-flightSpeed);
-
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)))
-				drawMenu = true;
-			else
-				drawMenu = false;
-
 		}
 		
+		firstLoop = false;
 
 		// Process events
 		sf::Event event;

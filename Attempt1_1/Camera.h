@@ -1,6 +1,8 @@
 #pragma once
 #include <glm\glm.hpp>
 #include "SFML\System.hpp"
+
+#define piover180 double(0.0174532925f)
 class Camera
 {
 public:
@@ -19,9 +21,6 @@ public:
 
 	glm::mat3 Camera::Place();
 
-private:
-	const float piover180 = 0.0174532925f;
-
 	/// keep track of total rotation around each axis
 	float xRotation;	// pitch angle
 	float yRotation;	// yaw angle
@@ -36,6 +35,8 @@ private:
 	glm::vec3 position;
 
 	sf::Clock tickTime;
-	float targetTickTime = 1.0f / 120;
+	float targetTickTime;
+private:
+
 };
 

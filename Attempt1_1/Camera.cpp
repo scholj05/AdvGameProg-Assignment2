@@ -4,9 +4,10 @@
 /// Set the initial position and direction of the camera
 Camera::Camera(float x, float y, float z, float pitch, float yaw, float roll)
 {
+	targetTickTime = 1.0f / 120;
 	this->position.x = 0;
 	this->position.y = 0;
-	this->position.z = 0;
+	this->position.z += 0;
 
 	this->xRotation = 0.0f;
 	this->yRotation = 0.0f;
