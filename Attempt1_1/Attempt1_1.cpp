@@ -7,6 +7,7 @@
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
+#include "Vehicle.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
@@ -57,7 +58,7 @@ int main()
 	glLoadIdentity();  // reset the projection matrix by loading the projection identity matrix
 
 	GLdouble fovY = 90;
-	GLdouble aspect = float(float(window.getSize().x) / window.getSize().y); // 16:9 ascpect ratio = 1.77
+	GLdouble aspect = float(float(window.getSize().x) / float(window.getSize().y)); // 16:9 ascpect ratio = 1.77
 	GLdouble zNear = 1.0f;
 	GLdouble zFar = 100000.0f;
 
@@ -85,6 +86,9 @@ int main()
 		menu.finalOffset
 	);
 	heightmap.GenerateHeightMap();
+
+	Vehicle plane;
+	plane.LoadObjectFile("../resources/PaperAirplane.obj");
 
 	Overlay gameUI;
 	gameUI.Setup(window);
@@ -200,11 +204,14 @@ int main()
 
 		heightmap.Render();
 
+		window.pushGLStates();
+		plane.Render();
+		window.popGLStates();
+
 		float mat[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 		gameUI.Update(mat[12], mat[13], mat[14], flightSpeed);
-		
-
+	
 		window.pushGLStates();
 		gameUI.Draw(window);
 
