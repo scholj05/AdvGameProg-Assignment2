@@ -233,7 +233,7 @@ void HeightMap::GenerateHeightMap()
 
 	facesIndex.push_back(0);
 
-	int limit = vectorCount * vectorCount - 1;
+	int limit = vectorCount * vectorCount -1;
 
 	for (int i = 0; i < vectorCount; i++)
 	{

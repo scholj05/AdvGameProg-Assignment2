@@ -13,6 +13,8 @@ public:
 	void Camera::Yaw(float angle, bool applyTime);
 	void Camera::Roll(float angle, bool applyTime);
 
+	void Rotate(float xAngle, float yAngle, float zAngle);
+
 	void Camera::Advance(float distance, bool applyTime);
 
 	void Ascend(float distance, bool applyTime);

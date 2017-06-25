@@ -56,9 +56,9 @@ int main()
 	glMatrixMode(GL_PROJECTION); // Select the builtin projection matrix
 	glLoadIdentity();  // reset the projection matrix by loading the projection identity matrix
 
-	GLdouble fovY = 120;
-	GLdouble aspect = 1.0f;
-	GLdouble zNear = 1.0f; 
+	GLdouble fovY = 90;
+	GLdouble aspect = float(float(window.getSize().x) / window.getSize().y); // 16:9 ascpect ratio = 1.77
+	GLdouble zNear = 1.0f;
 	GLdouble zFar = 100000.0f;
 
 	const GLdouble pi = 3.1415926535897932384626433832795;
@@ -89,14 +89,14 @@ int main()
 	Overlay gameUI;
 	gameUI.Setup(window);
 
-	Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+	//Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
 
-	//QuatCamera quatCamera(0.0f, 500.0f, 500.0f);
-	float flightSpeed = 1;
+	QuatCamera quatCamera(0.0f, 500.0f, 0.0f, 0.01f, 0.01f, 0.01f);
+	float flightSpeed = 5.0f;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	sf::Clock keyTimeout;
-	bool moveForward = true;
+	bool moveForward = false;//determines if movement is on or off at start
 	bool firstLoop = true;
 
 	// Start game loop
@@ -109,44 +109,44 @@ int main()
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
 			{
 				if (flightSpeed < 5.0f)
-					flightSpeed += 0.001f;
+					flightSpeed += 0.01f;
 
-			}
-
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
-			{
-				quatCamera.Yaw(0.01f, true);
-			}
-
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
-			{
-				quatCamera.Yaw(-0.01f, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
 			{
 				if (flightSpeed > 1.001f)
-					flightSpeed -= 0.001f;
+					flightSpeed -= 0.01f;
+			}
+
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
+			{
+				quatCamera.Yaw(-0.01f);// , true);
+			}
+
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
+			{
+				quatCamera.Yaw(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 			{
-				quatCamera.Pitch(-0.1f, true);
+				quatCamera.Pitch(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			{
-				quatCamera.Pitch(0.1f, true);
+				quatCamera.Pitch(-0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 			{
-				quatCamera.Roll(0.2f, true);
+				quatCamera.Roll(-0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 			{
-				quatCamera.Roll(-0.2f, true);
+				quatCamera.Roll(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
@@ -163,7 +163,7 @@ int main()
 
 			//processing continual movement
 			if (moveForward && !firstLoop)
-				quatCamera.Advance(-flightSpeed, true);
+				quatCamera.MoveForward(flightSpeed);//, true);
 		}
 		
 		firstLoop = false;
@@ -182,14 +182,16 @@ int main()
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
+		//float viewMatrix[16] = quatCamera.GetViewMatrixAsArray();
+		glMultMatrixf(quatCamera.GetViewMatrixAsArray());
 
-		glm::mat3 cameraMatrix3 = quatCamera.Place();
-		gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
-				cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
-				cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+		//std::cout << cameraMatrix3[0][0] << ", " << cameraMatrix3[0][1] << ", " << cameraMatrix3[0][2] << std::endl <<
+		//	cameraMatrix3[1][0] << ", " << cameraMatrix3[1][1] << ", " << cameraMatrix3[1][2] << std::endl <<
+		//	cameraMatrix3[2][0] << ", " << cameraMatrix3[2][1] << ", " << cameraMatrix3[2][2] << std::endl << std::endl;
+		//gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
+		//		cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
+		//		cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
 
-		//glm::quat cameraQuat = glm::quat(quatCamera.Update());
-		//gluLookAt(cameraQuat[0], cameraQuat[1], cameraQuat[2], cameraQuat[3]);
 
 		glewInit();
 

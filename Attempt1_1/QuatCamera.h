@@ -8,32 +8,46 @@
 class QuatCamera
 {
 public:
+	QuatCamera();
 
-	QuatCamera(float x, float y, float z);
+	QuatCamera(float positionX, float positionY, float positionZ, float rotationX, float rotationY, float rotationZ);
 
-	~QuatCamera();
+	void Pitch(float pitchRadians);
 
-	void QuatCamera::Pitch(float angle);
+	void Yaw(float yawRadians);
 
-	void QuatCamera::Yaw(float angle);
+	void Roll(float rollRadians);
 
-	void QuatCamera::Roll(float angle);
+	void Turn(float turnRadians);
 
-	void QuatCamera::Advance(float distance);
+	void Rotate(float angleRadians, const glm::vec3 & axis);
 
-	void QuatCamera::Ascend(float distance);
+	void Rotate(const glm::quat & rotation);
 
-	void QuatCamera::Strafe(float distance);
+	glm::vec3 GetForward() const;
 
-	glm::quat QuatCamera::Update();
+	glm::vec3 GetLeft() const;
+
+	glm::vec3 GetUp() const;
+
+	void MoveForward(float movement);
+
+	void MoveLeft(float movement);
+
+	void MoveUp(float movement);
+
+	glm::mat4 GetViewMatrix() const;
+
+	float * GetViewMatrixAsArray() const;
+
+
+
+
 
 private:
 
-	glm::quat cameraQuat;
-
-	float yaw, pitch, roll;
-
-	glm::vec3 cameraPos;
+	glm::vec3 mPosition;
+	glm::quat mOrientation;
 
 	sf::Clock tickTime;
 

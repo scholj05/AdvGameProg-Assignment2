@@ -86,6 +86,11 @@ void Camera::Roll(float angle, bool applyTime)
 	this->xVector *= -1;
 }
 
+void Camera::Rotate(float xAngle, float yAngle, float zAngle)
+{
+
+}
+
 
 void Camera::Strafe(float distance, bool applyTime)
 {

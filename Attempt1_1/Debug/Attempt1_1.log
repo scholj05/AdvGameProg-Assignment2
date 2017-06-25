@@ -1,6 +1,6 @@
 ﻿  Attempt1_1.cpp
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\quatcamera.h(42): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\quatcamera.h(48): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\quatcamera.h(56): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\quatcamera.h(62): warning C4305: 'initializing': truncation from 'double' to 'float'
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(40): warning C4305: 'initializing': truncation from 'double' to 'float'
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(36): warning C4101: 'random_min': unreferenced local variable
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(37): warning C4101: 'random_max': unreferenced local variable
