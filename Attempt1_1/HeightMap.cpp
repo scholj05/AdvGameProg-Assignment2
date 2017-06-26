@@ -1,13 +1,17 @@
 #include "HeightMap.h"
 
+HeightMap::HeightMap()
+{
 
+}
 
 HeightMap::HeightMap(int vectors, int gridSize, float min, float max, Smoother smooth, int smoothCount, RandomNumber random, float randomA, float randomB, float offset)
 {
 	generator = std::mt19937(rd());
-	uniformReal = std::uniform_real_distribution<double>(randomA, randomB);			// -10.0, 300.0 
-	normal = std::normal_distribution<double>(randomA, randomB);					// 1.0, 1000.0
-	logNormal = std::lognormal_distribution<double>(randomA, randomB);				// 1.0, 5.5
+	if (random == RandomNumber::normalDistribution)
+		normal = std::normal_distribution<double>(double(randomA), double(randomB));					// 1.0, 1000.0
+	else
+		logNormal = std::lognormal_distribution<double>(randomA, randomB);				// 1.0, 5.5
 	min_height = min;
 	max_height = max;
 	vectorCount = vectors;
@@ -30,8 +34,6 @@ double HeightMap::GetRandomNumber()
 		return normal(generator);
 	else if (randomNumber == RandomNumber::logNormalDistribution)
 		return logNormal(generator);
-	else if (randomNumber == RandomNumber::uniformDistribution)
-		return uniformReal(generator);
 }
 
 
@@ -156,21 +158,25 @@ int HeightMap::convert2Dto1D(int row, int col, int sides)
 
 void HeightMap::Render()
 {
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // wireframe on, must be set back before UI gets drawn
+	glEnable(GL_DEPTH_TEST); // ensure only things that should be visible are actually seen
+	
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // set the sides of polygon to be drawn and the type of colouring (LINE for wireframe, FILL for colour-fill)
 
-	glColor3f(0, 1, 0);
+	glEnableClientState(GL_COLOR_ARRAY);// enable the use of colour arrays
 
-	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);// enable the use of vertex arrays
 
-	glVertexPointer(3, GL_FLOAT, 0, &vectorBuffer[0]);
+	glVertexPointer(3, GL_FLOAT, 0, &vectorBuffer[0]);// set parameters of vertex array (values per point, datatype, stripe, start)
 
-	//glColorPointer();TODO
+	glColorPointer(3, GL_FLOAT, 0, &colourBuffer[0]);// set parameters of colour array (values per point, datatype, stripe, start)
 
-	glDrawElements(GL_TRIANGLE_STRIP, facesIndex.size(), GL_UNSIGNED_INT, &facesIndex[0]);
+	glDrawElements(GL_TRIANGLE_STRIP, facesIndex.size(), GL_UNSIGNED_INT, &facesIndex[0]);// draw the stuff (draw type, number of poly's, datatype, start)
 
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);// disable after use
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // wireframe off
+	glDisableClientState(GL_COLOR_ARRAY);// disable after use
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // set mode for post-render drawing (other objects like UI);
 }
 
 
@@ -200,7 +206,7 @@ void HeightMap::GenerateHeightMap()
 	float width = 200.0f;
 
 	float maxWidth = width * vectorCount;
-
+	float colourOffset = 0.0f;
 	for (int i = 0; i <vectorCount; i++)
 	{
 		for (int j = 0; j < vectorCount; j++)
@@ -213,13 +219,21 @@ void HeightMap::GenerateHeightMap()
 			vectorBuffer.push_back(y);
 			vectorBuffer.push_back(z);
 
+			float r = (1.0f / max_height) * y;
+			float g = r + 0.5;
+			float b = r;
+
+			colourBuffer.push_back(r);
+			colourBuffer.push_back(g);
+			colourBuffer.push_back(b);
+
 			v++;
 		}
 	}
 
 	facesIndex.push_back(0);
 
-	int limit = vectorCount * vectorCount - 1;
+	int limit = vectorCount * vectorCount -1;
 
 	for (int i = 0; i < vectorCount; i++)
 	{

@@ -3,9 +3,11 @@
 #include "SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
 #include "Camera.h"
+#include "QuatCamera.h"
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
+#include "Vehicle.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
@@ -23,14 +25,24 @@ int main()
 	settings.stencilBits = 8;           // Request a 8 bits stencil buffer
 	settings.antialiasingLevel = 2; // Request 2 levels of antialiasing
 
-	
 	// Use SFML to handle the window for us
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Default, settings);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Close, settings);
+
+	// create vars for setting values from the menu
+	int gridSize = 256;
+	int gridWidth = 250;
+	float min_height = -30.0f;
+	float max_height = 1000.0f;
+	HeightMap::RandomNumber random_number = HeightMap::RandomNumber::normalDistribution;
+	float random_min;
+	float random_max;
+	HeightMap::Smoother smoother = HeightMap::Smoother::normalSmoothing;
+	int smoothCount = 0;
+	float offset = 1.2;
 
 	Menu menu(window);
 	if (!menu.Run())
 		window.close();
-	window.clear();
 	bool drawMenu = false;
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // nicest perspective correction calculations
@@ -46,8 +58,8 @@ int main()
 	glLoadIdentity();  // reset the projection matrix by loading the projection identity matrix
 
 	GLdouble fovY = 90;
-	GLdouble aspect = 1.0f;
-	GLdouble zNear = 1.0f; 
+	GLdouble aspect = float(float(window.getSize().x) / float(window.getSize().y)); // 16:9 ascpect ratio = 1.77
+	GLdouble zNear = 1.0f;
 	GLdouble zFar = 100000.0f;
 
 	const GLdouble pi = 3.1415926535897932384626433832795;
@@ -60,18 +72,36 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
-	HeightMap heightmap((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
+	// ((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
+	HeightMap heightmap(
+		menu.finalGridSize + 1, 
+		menu.finalGridWidth, 
+		menu.finalMinHeight, 
+		menu.finalMaxHeight, 
+		menu.finalSmoother, 
+		menu.finalSmoothCount, 
+		menu.finalNumberGen, 
+		menu.finalNumberGenFirst, 
+		menu.finalNumberGenSecond,
+		menu.finalOffset
+	);
 	heightmap.GenerateHeightMap();
+
+	Vehicle plane;
+	plane.LoadObjectFile("../resources/PaperAirplane.obj");
 
 	Overlay gameUI;
 	gameUI.Setup(window);
 
-	Camera camera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
-	float flightSpeed = 1;
+	//Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
+
+	QuatCamera quatCamera(0.0f, 500.0f, 0.0f, 0.01f, 0.01f, 0.01f);
+	float flightSpeed = 5.0f;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	sf::Clock keyTimeout;
-	bool moveForward = true;
+	bool moveForward = false;//determines if movement is on or off at start
+	bool firstLoop = true;
 
 	// Start game loop
 	while (window.isOpen())
@@ -84,42 +114,43 @@ int main()
 			{
 				if (flightSpeed < 5.0f)
 					flightSpeed += 0.01f;
-			}
 
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
-			{
-				camera.Yaw(0.1f);
-			}
-
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
-			{
-				camera.Yaw(-0.1f);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
 			{
-				if (flightSpeed > 1.01f)
+				if (flightSpeed > 1.001f)
 					flightSpeed -= 0.01f;
+			}
+
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
+			{
+				quatCamera.Yaw(-0.01f);// , true);
+			}
+
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
+			{
+				quatCamera.Yaw(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 			{
-				camera.Pitch(-0.2f);
+				quatCamera.Pitch(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			{
-				camera.Pitch(0.2f);
+				quatCamera.Pitch(-0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 			{
-				camera.Roll(0.2f);
+				quatCamera.Roll(-0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 			{
-				camera.Roll(-0.2f);
+				quatCamera.Roll(0.01f);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
@@ -135,16 +166,11 @@ int main()
 			}
 
 			//processing continual movement
-			if (moveForward)
-				camera.Advance(-flightSpeed);
-
-			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)))
-				drawMenu = true;
-			else
-				drawMenu = false;
-
+			if (moveForward && !firstLoop)
+				quatCamera.MoveForward(flightSpeed);//, true);
 		}
 		
+		firstLoop = false;
 
 		// Process events
 		sf::Event event;
@@ -160,11 +186,16 @@ int main()
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
+		//float viewMatrix[16] = quatCamera.GetViewMatrixAsArray();
+		glMultMatrixf(quatCamera.GetViewMatrixAsArray());
 
-		glm::mat3 cameraMatrix3 = camera.Place();
-		gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
-				cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
-				cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+		//std::cout << cameraMatrix3[0][0] << ", " << cameraMatrix3[0][1] << ", " << cameraMatrix3[0][2] << std::endl <<
+		//	cameraMatrix3[1][0] << ", " << cameraMatrix3[1][1] << ", " << cameraMatrix3[1][2] << std::endl <<
+		//	cameraMatrix3[2][0] << ", " << cameraMatrix3[2][1] << ", " << cameraMatrix3[2][2] << std::endl << std::endl;
+		//gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
+		//		cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
+		//		cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
+
 
 		glewInit();
 
@@ -173,15 +204,17 @@ int main()
 
 		heightmap.Render();
 
+		window.pushGLStates();
+		plane.Render();
+		window.popGLStates();
+
 		float mat[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 		gameUI.Update(mat[12], mat[13], mat[14], flightSpeed);
-		
-
+	
 		window.pushGLStates();
 		gameUI.Draw(window);
-		if (drawMenu)
-			menu.Draw();
+
 		window.popGLStates();
 
 		window.display();
@@ -190,4 +223,4 @@ int main()
 	}
 
 	return EXIT_SUCCESS;
-}
+};
