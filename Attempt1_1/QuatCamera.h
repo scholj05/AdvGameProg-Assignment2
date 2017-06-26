@@ -1,5 +1,6 @@
 #pragma once
 #include "glm\glm.hpp"
+#include "glm\gtc\matrix_inverse.hpp"
 #include "glm\gtc\quaternion.hpp"
 #include "glm\gtx\quaternion.hpp"
 #include "SFML/System.hpp"
@@ -39,6 +40,8 @@ public:
 	glm::mat4 GetViewMatrix() const;
 
 	float * GetViewMatrixAsArray() const;
+
+	float * GetInverseViewMatrix() const;
 
 
 

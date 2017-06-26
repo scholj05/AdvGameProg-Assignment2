@@ -90,10 +90,19 @@ glm::mat4 QuatCamera::GetViewMatrix() const
 
 float* QuatCamera::GetViewMatrixAsArray() const
 {
-	glm::mat4 viewMatrix = glm::mat4_cast(mOrientation);
-	viewMatrix = glm::translate(viewMatrix, -mPosition);
+	glm::mat4 viewMatrix(GetViewMatrix());
 	float *view = new float[16];
 	const float *pSource = (const float*)glm::value_ptr(viewMatrix);
+	for (int i = 0; i < 16; ++i)
+		view[i] = pSource[i];
+	return view;
+}
+
+float* QuatCamera::GetInverseViewMatrix() const
+{
+	glm::mat4 inverse(glm::inverseTranspose(GetViewMatrix()));
+	float *view = new float[16];
+	const float *pSource = (const float*)glm::value_ptr(inverse);
 	for (int i = 0; i < 16; ++i)
 		view[i] = pSource[i];
 	return view;
