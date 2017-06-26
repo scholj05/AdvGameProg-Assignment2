@@ -239,7 +239,7 @@ void HeightMap::GenerateHeightMap()
 	{
 		for (int j = 0; j < vectorCount; j++)
 		{
-			int vertex = convert2Dto1D(i, j, vectorCount); // little method to calculate the vertex identifier
+			int vertex = convert2Dto1D(i, j, vectorCount - 1); // little method to calculate the vertex identifier
 			int adjacent = vertex + 1;
 			int below = vertex + vectorCount;
 

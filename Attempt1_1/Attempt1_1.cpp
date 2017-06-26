@@ -61,7 +61,7 @@ int main()
 	GLdouble fovY = 90;
 	GLdouble aspect = float(float(window.getSize().x) / float(window.getSize().y)); // 16:9 ascpect ratio = 1.77
 	GLdouble zNear = 1.0f;
-	GLdouble zFar = 100000.0f;
+	GLdouble zFar = 1000000.0f;
 
 	const GLdouble pi = 3.1415926535897932384626433832795;
 	GLdouble fW, fH;
@@ -187,31 +187,33 @@ int main()
 		//Prepare for drawing
 		// Clear color and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer and set previously selected colour
-
-		window.pushGLStates();
-		skybox.Render(quatCamera.GetViewMatrixAsArray());
-		window.popGLStates();
 		glMatrixMode(GL_MODELVIEW);
+
 		glLoadIdentity(); // reset
-		//float viewMatrix[16] = quatCamera.GetViewMatrixAsArray();
+
 		glMultMatrixf(quatCamera.GetViewMatrixAsArray());
 
 		glewInit();
 
+		window.pushGLStates();
+		skybox.Render(quatCamera.GetViewMatrixAsArray());
+		window.popGLStates();
 
 		glEnable(GL_PRIMITIVE_RESTART);
 		glPrimitiveRestartIndex(0xff);
-
 		heightmap.Render();
 
+		//draw the airplane
 		window.pushGLStates();
 		plane.Render();
 		window.popGLStates();
 
+		//update game UI values
 		float mat[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 		gameUI.Update(mat[12], mat[13], mat[14], flightSpeed);
 	
+		//draw the game UI
 		window.pushGLStates();
 		gameUI.Draw(window);
 		window.popGLStates();
