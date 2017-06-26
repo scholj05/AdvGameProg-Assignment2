@@ -8,6 +8,7 @@
 #include "Overlay.h"
 #include "Menu.h"
 #include "Vehicle.h"
+#include "Skybox.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
@@ -72,6 +73,9 @@ int main()
 	// define a perspective projection
 	glFrustum(-fW, fW, -fH, fH, zNear, zFar); // multiply the set matrix; by a perspective matrix
 
+	Skybox skybox;
+	skybox.Setup();
+
 	// ((pow(2, 8) + 1), 300, -50.0f, 3000.0f, HeightMap::Smoother::normalSmoothing, 3, HeightMap::RandomNumber::logNormalDistribution, 1.0f, 3.5f, 1.2f);
 	HeightMap heightmap(
 		menu.finalGridSize + 1, 
@@ -96,7 +100,7 @@ int main()
 	//Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
 
 	QuatCamera quatCamera(0.0f, 500.0f, 0.0f, 0.01f, 0.01f, 0.01f);
-	float flightSpeed = 5.0f;
+	float flightSpeed = 15.0f;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	sf::Clock keyTimeout;
@@ -112,7 +116,7 @@ int main()
 			/// do input checks outside of sf event to avoid 'first key stutter'
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
 			{
-				if (flightSpeed < 5.0f)
+				if (flightSpeed < 50.0f)
 					flightSpeed += 0.01f;
 
 			}
@@ -184,20 +188,16 @@ int main()
 		// Clear color and depth buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear z-buffer and set previously selected colour
 
+		window.pushGLStates();
+		skybox.Render(quatCamera.GetViewMatrixAsArray());
+		window.popGLStates();
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity(); // reset
 		//float viewMatrix[16] = quatCamera.GetViewMatrixAsArray();
 		glMultMatrixf(quatCamera.GetViewMatrixAsArray());
 
-		//std::cout << cameraMatrix3[0][0] << ", " << cameraMatrix3[0][1] << ", " << cameraMatrix3[0][2] << std::endl <<
-		//	cameraMatrix3[1][0] << ", " << cameraMatrix3[1][1] << ", " << cameraMatrix3[1][2] << std::endl <<
-		//	cameraMatrix3[2][0] << ", " << cameraMatrix3[2][1] << ", " << cameraMatrix3[2][2] << std::endl << std::endl;
-		//gluLookAt(cameraMatrix3[0][0], cameraMatrix3[0][1], cameraMatrix3[0][2],
-		//		cameraMatrix3[1][0], cameraMatrix3[1][1], cameraMatrix3[1][2],
-		//		cameraMatrix3[2][0], cameraMatrix3[2][1], cameraMatrix3[2][2]);
-
-
 		glewInit();
+
 
 		glEnable(GL_PRIMITIVE_RESTART);
 		glPrimitiveRestartIndex(0xff);
@@ -214,7 +214,6 @@ int main()
 	
 		window.pushGLStates();
 		gameUI.Draw(window);
-
 		window.popGLStates();
 
 		window.display();

@@ -8,7 +8,7 @@ Vehicle::Vehicle()
 
 void Vehicle::LoadObjectFile(std::string location)
 {
-	Assimp::Importer importer;
+	/*Assimp::Importer importer;
 	const aiScene *scene = importer.ReadFile(location, aiProcessPreset_TargetRealtime_Fast);//aiProcessPreset_TargetRealtime_Fast has the configs you'll need
 
 	aiMesh *mesh = scene->mMeshes[0]; //assuming you only want the first mesh
@@ -41,14 +41,14 @@ void Vehicle::LoadObjectFile(std::string location)
 
 	uvArray -= mesh->mNumFaces * 3 * 2;
 	normalArray -= mesh->mNumFaces * 3 * 3;
-	vertexArray -= mesh->mNumFaces * 3 * 3;
+	vertexArray -= mesh->mNumFaces * 3 * 3;*/
 
 }
 
 void Vehicle::Render()
 {
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
+	/*glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -61,7 +61,7 @@ void Vehicle::Render()
 	glDrawArrays(GL_TRIANGLES, 0, numVerts);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_NORMAL_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
 }
 
 Vehicle::~Vehicle()
