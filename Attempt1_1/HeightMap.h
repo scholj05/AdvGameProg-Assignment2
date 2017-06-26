@@ -28,6 +28,8 @@ public:
 	void HeightMap::Render();
 	void HeightMap::GenerateHeightMap();
 
+	void HeightOffset();
+
 private:
 	///Vectors for holding the vectors and faces
 	std::vector<GLfloat> vectorBuffer;

@@ -14,23 +14,31 @@ QuatCamera::QuatCamera()
 //constructor
 QuatCamera::QuatCamera(float positionX, float positionY, float positionZ, float rotationX, float rotationY, float rotationZ)
 {
-	mPosition = glm::vec3(positionX, positionY, positionZ);
-	glm::vec3 angles(DegToRad(rotationX), DegToRad(rotationY), DegToRad(rotationZ));
+	glm::vec3 angles(rotationX, DegToRad(rotationY), DegToRad(rotationZ));
 	mOrientation = glm::quat(angles);
+	MoveLeft(positionX, false);
+	MoveUp(positionY, false);
+	MoveForward(positionZ, false);
 }
 
-void QuatCamera::Pitch(float pitchRadians) 
+void QuatCamera::Pitch(float pitchRadians, bool time) 
 {
+	if (time) 
+		pitchRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(pitchRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
-void QuatCamera::Yaw(float yawRadians) 
+void QuatCamera::Yaw(float yawRadians, bool time) 
 {
+	if (time) 
+		yawRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(yawRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void QuatCamera::Roll(float rollRadians) 
+void QuatCamera::Roll(float rollRadians, bool time) 
 {
+	if (time) 
+		rollRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(rollRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
@@ -66,29 +74,41 @@ glm::vec3 QuatCamera::GetUp() const
 	return glm::conjugate(mOrientation) * glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
-void QuatCamera::MoveForward(float movement) 
+void QuatCamera::MoveForward(float movement, bool time) 
 {
+	if (time) 
+		movement *= tickTime.getElapsedTime().asSeconds();
 	mPosition += GetForward() * movement;
 }
 
-void QuatCamera::MoveLeft(float movement) 
+void QuatCamera::MoveLeft(float movement, bool time) 
 {
+	if (time) 
+		movement *= tickTime.getElapsedTime().asSeconds();
 	mPosition += GetLeft() * movement;
 }
 
-void QuatCamera::MoveUp(float movement) 
+void QuatCamera::MoveUp(float movement, bool time) 
 {
+	if (time) 
+		movement *= tickTime.getElapsedTime().asSeconds();
 	mPosition += GetUp() * movement;
 }
 
-glm::mat4 QuatCamera::GetViewMatrix() const 
+void QuatCamera::Tick()
 {
+	tickTime.restart();
+}
+
+glm::mat4 QuatCamera::GetViewMatrix()  
+{
+	Tick();
 	glm::mat4 viewMatrix = glm::mat4_cast(mOrientation);
 	viewMatrix = glm::translate(viewMatrix, -mPosition);
 	return viewMatrix;
 }
 
-float* QuatCamera::GetViewMatrixAsArray() const
+float* QuatCamera::GetViewMatrixAsArray() 
 {
 	glm::mat4 viewMatrix(GetViewMatrix());
 	float *view = new float[16];
@@ -98,7 +118,7 @@ float* QuatCamera::GetViewMatrixAsArray() const
 	return view;
 }
 
-float* QuatCamera::GetInverseViewMatrix() const
+float* QuatCamera::GetInverseViewMatrix() 
 {
 	glm::mat4 inverse(glm::inverseTranspose(GetViewMatrix()));
 	float *view = new float[16];

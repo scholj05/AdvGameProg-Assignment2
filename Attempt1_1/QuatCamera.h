@@ -13,11 +13,11 @@ public:
 
 	QuatCamera(float positionX, float positionY, float positionZ, float rotationX, float rotationY, float rotationZ);
 
-	void Pitch(float pitchRadians);
+	void Pitch(float pitchRadians, bool time);
 
-	void Yaw(float yawRadians);
+	void Yaw(float yawRadians, bool time);
 
-	void Roll(float rollRadians);
+	void Roll(float rollRadians, bool time);
 
 	void Turn(float turnRadians);
 
@@ -31,17 +31,19 @@ public:
 
 	glm::vec3 GetUp() const;
 
-	void MoveForward(float movement);
+	void MoveForward(float movement, bool time);
 
-	void MoveLeft(float movement);
+	void MoveLeft(float movement, bool time);
 
-	void MoveUp(float movement);
+	void MoveUp(float movement, bool time);
 
-	glm::mat4 GetViewMatrix() const;
+	void Tick();
 
-	float * GetViewMatrixAsArray() const;
+	glm::mat4 GetViewMatrix() ;
 
-	float * GetInverseViewMatrix() const;
+	float * GetViewMatrixAsArray() ;
+
+	float * GetInverseViewMatrix() ;
 
 
 

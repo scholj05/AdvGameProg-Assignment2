@@ -99,12 +99,12 @@ int main()
 
 	//Camera quatCamera(0.0f, 2000.0f, 5000.0f, 0.0f, 0.0f, 0.0f);
 
-	QuatCamera quatCamera(0.0f, 500.0f, 0.0f, 0.01f, 0.01f, 0.01f);
-	float flightSpeed = 15.0f;
+	QuatCamera quatCamera(0.0f, menu.finalMaxHeight, -(menu.finalGridSize / 2 + 1), tan(menu.finalMaxHeight / menu.finalGridSize / 2), 180.0f, 0.01f);
+	float flightSpeed = 1.0f;
 
 	// bool for debugging. if false, the call to keep moving forward will not happen.
 	sf::Clock keyTimeout;
-	bool moveForward = false;//determines if movement is on or off at start
+	bool moveForward = true;//determines if movement is on or off at start
 	bool firstLoop = true;
 
 	// Start game loop
@@ -116,45 +116,45 @@ int main()
 			/// do input checks outside of sf event to avoid 'first key stutter'
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
 			{
-				if (flightSpeed < 50.0f)
-					flightSpeed += 0.01f;
+				if (flightSpeed < 10.0f)
+					flightSpeed += 0.1f;
 
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
 			{
-				if (flightSpeed > 1.001f)
-					flightSpeed -= 0.01f;
+				if (flightSpeed > 1.1f)
+					flightSpeed -= 0.1f;
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
 			{
-				quatCamera.Yaw(-0.01f);// , true);
+				quatCamera.Yaw(-0.1f, true);// , true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
 			{
-				quatCamera.Yaw(0.01f);//, true);
+				quatCamera.Yaw(0.1f, true);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 			{
-				quatCamera.Pitch(0.01f);//, true);
+				quatCamera.Pitch(0.1f, true);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			{
-				quatCamera.Pitch(-0.01f);//, true);
+				quatCamera.Pitch(-0.1f, true);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
 			{
-				quatCamera.Roll(-0.01f);//, true);
+				quatCamera.Roll(-0.1f, true);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
 			{
-				quatCamera.Roll(0.01f);//, true);
+				quatCamera.Roll(0.1f, true);//, true);
 			}
 
 			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
@@ -171,7 +171,7 @@ int main()
 
 			//processing continual movement
 			if (moveForward && !firstLoop)
-				quatCamera.MoveForward(flightSpeed);//, true);
+				quatCamera.MoveForward(flightSpeed, true);//, true);
 		}
 		
 		firstLoop = false;

@@ -262,3 +262,8 @@ void HeightMap::GenerateHeightMap()
 		}
 	}
 }
+
+void HeightMap::HeightOffset()
+{
+
+}
