@@ -193,4 +193,7 @@ void Skybox::Render(float * matrix)
 	glEnd();
 
 	glEnable(GL_DEPTH_TEST);
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_CULL_FACE);
 }

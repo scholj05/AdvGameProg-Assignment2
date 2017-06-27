@@ -72,17 +72,17 @@ void HeightMap::square(int x, int y, int size, float* heightmap[], float displac
 	//  d
 
 	//check if on the edge of the grid. If above water level (0), set to 0 to avoid gaping edges
-	if (x == 0)	heightmap[x][y + half_size] = 0;
-	else heightmap[x][y + half_size] = heightBoundCheck(a + GetRandomNumber()*displacement); // a
+	/*if (x == 0)	heightmap[x][y + half_size] = 0;
+	else*/ heightmap[x][y + half_size] = heightBoundCheck(a + GetRandomNumber()*displacement); // a
 
-	if (y == 0) heightmap[x + half_size][y] = 0;
-	else heightmap[x + half_size][y] = heightBoundCheck(b + GetRandomNumber()*displacement); // b
+	/*if (y == 0) heightmap[x + half_size][y] = 0;
+	else*/ heightmap[x + half_size][y] = heightBoundCheck(b + GetRandomNumber()*displacement); // b
 
-	if (x > 0) heightmap[x + half_size][y + size - 1] = 0;
-	else heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + GetRandomNumber()*displacement); // c
+	/*if (x > 0) heightmap[x + half_size][y + size - 1] = 0;
+	else*/ heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + GetRandomNumber()*displacement); // c
 
-	if (y > 0) heightmap[x + size - 1][y + half_size] = 0;
-	else heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + GetRandomNumber()*displacement); // d
+	/*if (y > 0) heightmap[x + size - 1][y + half_size] = 0;
+	else*/ heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + GetRandomNumber()*displacement); // d
 }
 
 
@@ -129,14 +129,14 @@ void HeightMap::Smooth(float * heightmap[], int sides)
 			float cc = heightmap[(i + 1 + sides) % sides][(j + 1 + sides) % sides];
 
 			float average = (aa + ab + ac + ba + bb + bc + ca + cb + cc) / 9;
-			if (i == sides - 1 || j == sides - 1) heightmap[i][j] = 0;
-			else
-			{
+			//if (i == sides - 1 || j == sides - 1) heightmap[i][j] = 0;
+			//else
+			//{
 				if (smoother == Smoother::normalSmoothing)
 					heightmap[i][j] = (heightmap[i][j] + average) / 2;
 				else if (smoother == Smoother::aggressiveSmoothing)
 					heightmap[i][j] = average;
-			}
+			//}
 		}
 	}
 }
@@ -202,6 +202,8 @@ void HeightMap::GenerateHeightMap()
 		Smooth(heightmap, vectorCount);
 	}
 
+	HeightOffset();
+
 	int v = 0;
 	float width = 200.0f;
 
@@ -239,7 +241,7 @@ void HeightMap::GenerateHeightMap()
 	{
 		for (int j = 0; j < vectorCount; j++)
 		{
-			int vertex = convert2Dto1D(i, j, vectorCount - 1); // little method to calculate the vertex identifier
+			int vertex = convert2Dto1D(i, j, vectorCount); // little method to calculate the vertex identifier
 			int adjacent = vertex + 1;
 			int below = vertex + vectorCount;
 
@@ -265,5 +267,26 @@ void HeightMap::GenerateHeightMap()
 
 void HeightMap::HeightOffset()
 {
+	heightOffsetMap = new float*[vectorCount];
 
+	for (int x = 0; x < vectorCount; x++)
+	{
+		heightOffsetMap[x] = new float[vectorCount];
+		//printf("\n");
+		for (int y = 0; y < vectorCount; y++)
+		{
+			int offsetXRight = vectorCount - (x + 1);
+			float offsetX = (x < offsetXRight ? x : offsetXRight);
+
+			int offsetYRight = vectorCount - (y + 1);
+			float offsetY = (y < offsetYRight ? y : offsetYRight);
+
+			float offset = 1 - ((vectorCount - (offsetX < offsetY ? offsetX : offsetY)) / vectorCount);
+
+			if (heightmap[x][y] > 0) 
+				heightmap[x][y] *= (2 * offset);
+			//printf("%1.2f, ", 2*offset);
+		}
+	}
+	//printf("end");
 }

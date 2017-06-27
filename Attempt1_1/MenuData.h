@@ -47,7 +47,7 @@ private:
 
 	int data_GridSize[5] = { 32, 64, 128, 256, 512 };
 	int data_GridWidth[10] = { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500 };
-	float data_MinHeight[6] = { 0.0f, -25.0f, -50.0f, -100.0f, -200.0f, -300.0f };
+	float data_MinHeight[13] = { 0.0f, -50.0f, -100.0f, -200.0f, -300.0f, -400.0f, -500.0f, -750.0f, -1000.0f, -2000.0f, -3000.0f, -5000.0f, -10000.0f };
 	float data_MaxHeight[12] = { 50.0f, 100.0f, 200.0f, 300.0f, 400.0f, 500.0f, 750.0f, 1000.0f, 2000.0f, 3000.0f, 5000.0f, 10000.0f };
 	HeightMap::RandomNumber data_NumberGen[2] = { HeightMap::RandomNumber::normalDistribution, HeightMap::RandomNumber::logNormalDistribution};
 	float data_MinGen[9] = { 0.0f, -25.0f, -50.0f, -100.0f, -200.0f, -300.0f, -500.0f, -750.0f, -1000.0f };

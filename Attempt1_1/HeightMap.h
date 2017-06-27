@@ -53,6 +53,7 @@ private:
 	int smoothIterations;
 	RandomNumber randomNumber;
 	float** heightmap;
+	float** heightOffsetMap;
 	float displacementOffset;
 
 
