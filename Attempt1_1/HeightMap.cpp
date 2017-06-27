@@ -9,9 +9,9 @@ HeightMap::HeightMap(int vectors, int gridSize, float min, float max, Smoother s
 {
 	generator = std::mt19937(rd());
 	if (random == RandomNumber::normalDistribution)
-		normal = std::normal_distribution<double>(double(randomA), double(randomB));					// 1.0, 1000.0
+		normal = std::normal_distribution<double>(double(randomA), double(randomB));
 	else
-		logNormal = std::lognormal_distribution<double>(randomA, randomB);				// 1.0, 5.5
+		logNormal = std::lognormal_distribution<double>(randomA, randomB);
 	min_height = min;
 	max_height = max;
 	vectorCount = vectors;
@@ -67,22 +67,10 @@ void HeightMap::square(int x, int y, int size, float* heightmap[], float displac
 	float c = (top_right + center + bottom_right) / 3.0f;
 	float d = (bottom_left + center + bottom_right) / 3.0f;
 
-	//  a
-	//b   c
-	//  d
-
-	//check if on the edge of the grid. If above water level (0), set to 0 to avoid gaping edges
-	/*if (x == 0)	heightmap[x][y + half_size] = 0;
-	else*/ heightmap[x][y + half_size] = heightBoundCheck(a + GetRandomNumber()*displacement); // a
-
-	/*if (y == 0) heightmap[x + half_size][y] = 0;
-	else*/ heightmap[x + half_size][y] = heightBoundCheck(b + GetRandomNumber()*displacement); // b
-
-	/*if (x > 0) heightmap[x + half_size][y + size - 1] = 0;
-	else*/ heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + GetRandomNumber()*displacement); // c
-
-	/*if (y > 0) heightmap[x + size - 1][y + half_size] = 0;
-	else*/ heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + GetRandomNumber()*displacement); // d
+	heightmap[x][y + half_size] = heightBoundCheck(a + GetRandomNumber()*displacement);
+	heightmap[x + half_size][y] = heightBoundCheck(b + GetRandomNumber()*displacement);
+	heightmap[x + half_size][y + size - 1] = heightBoundCheck(c + GetRandomNumber()*displacement);
+	heightmap[x + size - 1][y + half_size] = heightBoundCheck(d + GetRandomNumber()*displacement);
 }
 
 
@@ -103,10 +91,10 @@ void HeightMap::diamond(int x, int y, int size, float* heightmap[], float displa
 
 	if (half_size > 1)
 	{
-		diamond(x, y, half_size + 1, heightmap, displacement / displacementOffset/*1.2f*/, sides);
-		diamond(x + half_size, y, half_size + 1, heightmap, displacement / displacementOffset/*1.2f*/, sides);
-		diamond(x, y + half_size, half_size + 1, heightmap, displacement / displacementOffset/*1.2f*/, sides);
-		diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / displacementOffset/*1.2f*/, sides);
+		diamond(x, y, half_size + 1, heightmap, displacement / displacementOffset, sides);
+		diamond(x + half_size, y, half_size + 1, heightmap, displacement / displacementOffset, sides);
+		diamond(x, y + half_size, half_size + 1, heightmap, displacement / displacementOffset, sides);
+		diamond(x + half_size, y + half_size, half_size + 1, heightmap, displacement / displacementOffset, sides);
 	}
 }
 
@@ -129,14 +117,12 @@ void HeightMap::Smooth(float * heightmap[], int sides)
 			float cc = heightmap[(i + 1 + sides) % sides][(j + 1 + sides) % sides];
 
 			float average = (aa + ab + ac + ba + bb + bc + ca + cb + cc) / 9;
-			//if (i == sides - 1 || j == sides - 1) heightmap[i][j] = 0;
-			//else
-			//{
-				if (smoother == Smoother::normalSmoothing)
-					heightmap[i][j] = (heightmap[i][j] + average) / 2;
-				else if (smoother == Smoother::aggressiveSmoothing)
-					heightmap[i][j] = average;
-			//}
+			
+			if (smoother == Smoother::normalSmoothing)
+				heightmap[i][j] = (heightmap[i][j] + average) / 2;
+			else if (smoother == Smoother::aggressiveSmoothing)
+				heightmap[i][j] = average;
+
 		}
 	}
 }
@@ -200,7 +186,7 @@ void HeightMap::GenerateHeightMap()
 
 	diamond(0, 0, vectorCount, heightmap, 2.0f, vectorCount);
 
-	/// run the smooth function x number of times
+	// run the smooth function x number of times
 	for (int i = 0; i < smoothIterations; i++)
 	{
 		Smooth(heightmap, vectorCount);
@@ -230,44 +216,37 @@ void HeightMap::GenerateHeightMap()
 
 			oceanPoint = segment * 5;
 
-			if (y < oceanPoint)
+			if (y < oceanPoint)// ocean (transparent)
 			{
-				r = 0;// .9137;
-				g = 0;// .8392;
-				b = 0;// .4196;
+				r = 0;
+				g = 0;
+				b = 0;
 				a = 0;
 			}
-			if (y >= segment * 5 && y < segment * 12)
+			if (y >= segment * 5 && y < segment * 12)// sand (yellow)
 			{
-				r = 0.9137;// sand
+				r = 0.9137;
 				g = 0.8392;
 				b = 0.4196;
 				a = 1;
 			}
-			if (y >= segment * 12 && y < segment * 45)
+			if (y >= segment * 12 && y < segment * 45)// grass (green)
 			{
 				r = (1.0f / max_height) * y;
 				g = r + 0.5;
 				b = r;
 				a = 1;
 			}
-			if (y >= segment * 45 && y < segment * 80)
+			if (y >= segment * 45 && y < segment * 80)// mountain (brown)
 			{
-				r = 0.6;// brown
+				r = 0.6;
 				g = 0.4;
 				b = 0.2;
 				a = 1;
 			}
-			/*if (y >= segment * 80 && y < segment * 85)
+			if (y >= segment * 80 && y < segment * 100)// mountain top (white)
 			{
-				r = 0.6;// brown
-				g = 0.4;
-				b = 0.2;
-				a = 1;
-			}*/
-			if (y >= segment * 80 && y < segment * 100)
-			{
-				r = g = b = a = 1.0f;// white
+				r = g = b = a = 1.0f;
 			}
 
 			colourBuffer.push_back(r);
@@ -318,7 +297,6 @@ void HeightMap::HeightOffset()
 	for (int x = 0; x < vectorCount; x++)
 	{
 		heightOffsetMap[x] = new float[vectorCount];
-		//printf("\n");
 		for (int y = 0; y < vectorCount; y++)
 		{
 			int offsetXRight = vectorCount - (x + 1);
@@ -331,10 +309,8 @@ void HeightMap::HeightOffset()
 
 			if (heightmap[x][y] > 0) 
 				heightmap[x][y] *= (2 * offset);
-			//printf("%1.2f, ", 2*offset);
 		}
 	}
-	//printf("end");
 }
 
 float HeightMap::GetOceanPoint()

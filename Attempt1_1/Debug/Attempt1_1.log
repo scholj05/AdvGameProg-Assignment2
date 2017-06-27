@@ -1,19 +1,19 @@
 ﻿  HeightMap.cpp
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(76): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(79): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(82): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(85): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(100): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(70): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(71): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(72): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(73): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(88): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(228): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(229): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(230): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(236): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(242): warning C4305: '=': truncation from 'double' to 'float'
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(243): warning C4305: '=': truncation from 'double' to 'float'
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(244): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(250): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(256): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(257): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(258): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(325): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(328): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(303): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(306): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\jesse\google drive\unitec\bcs\semester 4\7441 advanced game\assignment 2\repo\advgameprog-assignment2\attempt1_1\heightmap.cpp(37): warning C4715: 'HeightMap::GetRandomNumber': not all control paths return a value
   Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
   Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)
