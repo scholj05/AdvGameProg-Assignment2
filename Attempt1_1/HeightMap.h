@@ -30,6 +30,8 @@ public:
 
 	void HeightOffset();
 
+	float GetOceanPoint();
+
 private:
 	///Vectors for holding the vectors and faces
 	std::vector<GLfloat> vectorBuffer;
@@ -55,6 +57,7 @@ private:
 	float** heightmap;
 	float** heightOffsetMap;
 	float displacementOffset;
+	float oceanPoint;
 
 
 	double HeightMap::heightBoundCheck(double initialHeight);

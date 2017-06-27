@@ -1,3 +1,7 @@
+#include <glm\glm.hpp>
+#include <iostream>
+#include <cmath>
+#include <vector>
 #include "GL\glew.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
@@ -9,10 +13,7 @@
 #include "Menu.h"
 #include "Vehicle.h"
 #include "Skybox.h"
-#include <glm\glm.hpp>
-#include <iostream>
-#include <cmath>
-#include <vector>
+#include "Ocean.h"
 
 
 int main()
@@ -64,7 +65,7 @@ int main()
 	// initialise skybox
 	Skybox skybox;
 	// run the skybox setup (texture bindings)
-	skybox.Setup();
+	skybox.Setup(100000.0f);
 
 	// setup the heightmap with the chosen values from the menu
 	HeightMap heightmap(
@@ -80,6 +81,9 @@ int main()
 		menu.finalOffset				// amount of offset between 'levels' in diamond-square algorithm
 	);
 	heightmap.GenerateHeightMap();
+
+	Ocean ocean;
+	ocean.Setup(skybox.GetSize(), heightmap.GetOceanPoint());
 
 	// initialise the vehicle (object load)
 	Vehicle plane;
@@ -213,6 +217,10 @@ int main()
 
 		// disable texturing before drawing non-textured objects
 		glDisable(GL_TEXTURE_2D);
+
+		window.pushGLStates();
+		ocean.Render(quatCamera.GetViewMatrixAsArray());
+		window.popGLStates();
 
 		// enable EoF value for triangle strip rendering
 		glEnable(GL_PRIMITIVE_RESTART);

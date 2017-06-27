@@ -160,6 +160,10 @@ void HeightMap::Render()
 {
 	glEnable(GL_DEPTH_TEST); // ensure only things that should be visible are actually seen
 	
+	glEnable(GL_BLEND); 
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // set the sides of polygon to be drawn and the type of colouring (LINE for wireframe, FILL for colour-fill)
 
 	glEnableClientState(GL_COLOR_ARRAY);// enable the use of colour arrays
@@ -168,7 +172,7 @@ void HeightMap::Render()
 
 	glVertexPointer(3, GL_FLOAT, 0, &vectorBuffer[0]);// set parameters of vertex array (values per point, datatype, stripe, start)
 
-	glColorPointer(3, GL_FLOAT, 0, &colourBuffer[0]);// set parameters of colour array (values per point, datatype, stripe, start)
+	glColorPointer(4, GL_FLOAT, 0, &colourBuffer[0]);// set parameters of colour array (values per point, datatype, stripe, start)
 
 	glDrawElements(GL_TRIANGLE_STRIP, facesIndex.size(), GL_UNSIGNED_INT, &facesIndex[0]);// draw the stuff (draw type, number of poly's, datatype, start)
 
@@ -221,13 +225,55 @@ void HeightMap::GenerateHeightMap()
 			vectorBuffer.push_back(y);
 			vectorBuffer.push_back(z);
 
-			float r = (1.0f / max_height) * y;
-			float g = r + 0.5;
-			float b = r;
+			float r, g, b, a;
+			float segment = max_height / 100;
+
+			oceanPoint = segment * 5;
+
+			if (y < oceanPoint)
+			{
+				r = 0;// .9137;
+				g = 0;// .8392;
+				b = 0;// .4196;
+				a = 0;
+			}
+			if (y >= segment * 5 && y < segment * 12)
+			{
+				r = 0.9137;// sand
+				g = 0.8392;
+				b = 0.4196;
+				a = 1;
+			}
+			if (y >= segment * 12 && y < segment * 45)
+			{
+				r = (1.0f / max_height) * y;
+				g = r + 0.5;
+				b = r;
+				a = 1;
+			}
+			if (y >= segment * 45 && y < segment * 80)
+			{
+				r = 0.6;// brown
+				g = 0.4;
+				b = 0.2;
+				a = 1;
+			}
+			/*if (y >= segment * 80 && y < segment * 85)
+			{
+				r = 0.6;// brown
+				g = 0.4;
+				b = 0.2;
+				a = 1;
+			}*/
+			if (y >= segment * 80 && y < segment * 100)
+			{
+				r = g = b = a = 1.0f;// white
+			}
 
 			colourBuffer.push_back(r);
 			colourBuffer.push_back(g);
 			colourBuffer.push_back(b);
+			colourBuffer.push_back(a);
 
 			v++;
 		}
@@ -289,4 +335,9 @@ void HeightMap::HeightOffset()
 		}
 	}
 	//printf("end");
+}
+
+float HeightMap::GetOceanPoint()
+{
+	return oceanPoint;
 }

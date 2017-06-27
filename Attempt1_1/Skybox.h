@@ -12,9 +12,10 @@ public:
 
 	~Skybox();
 
-	void Skybox::Setup();
+	void Skybox::Setup(float boxSize);
 
 	void Skybox::Render( float * matrix);
+	float GetSize();
 private:
 	//allocate handles
 	GLuint right_handle;
@@ -30,5 +31,7 @@ private:
 
 	//image holders
 	sf::Image top, bottom, left, right, front, back;
+
+	float boxSize;
 };
 
