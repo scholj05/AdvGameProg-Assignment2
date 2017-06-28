@@ -223,25 +223,46 @@ void HeightMap::GenerateHeightMap()
 				b = 0;
 				a = 0;
 			}
+			if (y >= segment * 2.5 && y < segment * 5)// waves
+			{
+				r = 0.5;
+				g = 0.5;
+				b = 1;
+				a = 0.1;
+			}
 			if (y >= segment * 5 && y < segment * 12)// sand (yellow)
 			{
-				r = 0.9137;
-				g = 0.8392;
-				b = 0.4196;
+				r = (1-(1.0f / max_height) * y*2);
+				g = r-0.1;
+				b = g/2;
 				a = 1;
 			}
-			if (y >= segment * 12 && y < segment * 45)// grass (green)
+			if (y >= segment * 12 && y < segment * 15)// grass (green)
+			{
+				g = (1.0f / max_height) * y *3;
+				r = g/2;
+				b = r/2;
+				a = 1;
+			}
+			if (y >= segment * 15 && y < segment * 22)// grass (upper)
+			{
+				g = (1.0f / max_height) * y * 2.5;
+				r = g / 2;
+				b = r / 2;
+				a = 1;
+			}
+			if (y >= segment * 22 && y < segment * 30)// mountain (brown)
 			{
 				r = (1.0f / max_height) * y;
-				g = r + 0.5;
-				b = r;
+				g = (0.75f / max_height) * y *1.5;
+				b = (0.5f / max_height) * y;
 				a = 1;
 			}
-			if (y >= segment * 45 && y < segment * 80)// mountain (brown)
+			if (y >= segment * 30 && y < segment * 80)// mountain (dark brown)
 			{
-				r = 0.6;
-				g = 0.4;
-				b = 0.2;
+				r = (1.0f / max_height) * y /2;
+				g = (0.75f / max_height) * y /2;
+				b = (0.5f / max_height) * y /2;
 				a = 1;
 			}
 			if (y >= segment * 80 && y < segment * 100)// mountain top (white)

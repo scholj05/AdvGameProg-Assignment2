@@ -1,0 +1,29 @@
+controls / warping issue
+
+skybox
+
+texturing
+
+world boundary collision
+
+lighting
+
+colourfill?
+
+destructible terrain?
+
+collision detection?
+
+	UI for choosing some game settings?
+number generation type (uniform, real, normal, some others)
+min/max values for world heights + mean value
+smoothing amount
+
+
+main render()
+handles rendering of heeight map 
+
+camera::place() 
+where the player is / camera placement
+
+gl
