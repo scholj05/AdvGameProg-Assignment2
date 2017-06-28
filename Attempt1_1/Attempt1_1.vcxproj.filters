@@ -51,6 +51,9 @@
     <ClInclude Include="Ocean.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TGUIMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,6 +87,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Ocean.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TGUIMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

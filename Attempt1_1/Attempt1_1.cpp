@@ -11,6 +11,7 @@
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
+#include "TGUIMenu.h"
 #include "Vehicle.h"
 #include "Skybox.h"
 #include "Ocean.h"
@@ -27,7 +28,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Close, settings);
 
 	// initialise the menu (self contained render loop)
-	Menu menu(window);
+	TGUIMenu menu(window);
 	// if the menu is closed, also close the window
 	if (!menu.Run())
 		window.close();
