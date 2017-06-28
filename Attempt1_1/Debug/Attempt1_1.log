@@ -1,17 +1,2 @@
-﻿  TGUIMenu.cpp
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(70): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(77): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(108): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(117): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(180): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\temp\advgameprog-assignment2\attempt1_1\tguimenu.cpp(282): warning C4715: 'TGUIMenu::Run': not all control paths return a value
-  Attempt1_1.vcxproj -> C:\Temp\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
-  Attempt1_1.vcxproj -> C:\Temp\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)
+﻿  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
+  Attempt1_1.vcxproj -> C:\Users\Jesse\Google Drive\Unitec\BCS\Semester 4\7441 Advanced Game\Assignment 2\repo\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)
