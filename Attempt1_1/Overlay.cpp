@@ -21,13 +21,13 @@ void Overlay::Setup(sf::RenderWindow &window)
 	uiRect.setPosition(0, 0);
 	uiRect.setFillColor(sf::Color::White);
 
-	float scalarX = m_window->getSize().x / 100;
-	float scalarY = m_window->getSize().y / 100;
+	int scalarX = m_window->getSize().x / 100;
+	int scalarY = m_window->getSize().y / 100;
 
 	float xStart = uiRect.getPosition().x;
 	float yStart = uiRect.getPosition().y;
-	float xPadding = uiRect.getSize().x / 10;
-	float yPadding = uiRect.getSize().y / 9;
+	unsigned int xPadding = unsigned int(uiRect.getSize().x / 10);
+	unsigned int yPadding = unsigned int(uiRect.getSize().y / 9);
 
 	text_fpsCount.setFont(font);
 	text_xPos.setFont(font);
@@ -61,7 +61,7 @@ void Overlay::Setup(sf::RenderWindow &window)
 	gyroSprite.setTextureRect(sf::IntRect(710, 710, 180, 180));
 	gyroSprite.setOrigin(gyroSprite.getGlobalBounds().width / 2, gyroSprite.getGlobalBounds().height / 2);
 	gyroSprite.setTexture(gyroTexture);
-	gyroSprite.setPosition(m_window->getSize().x / 2, m_window->getSize().y/100*94);
+	gyroSprite.setPosition(float(m_window->getSize().x / 2), float(m_window->getSize().y/100*94));
 
 	if (!pitchTexture.loadFromFile("../resources/pitch.png"))
 	{
@@ -70,8 +70,8 @@ void Overlay::Setup(sf::RenderWindow &window)
 
 	pitchSprite.setTexture(pitchTexture);
 	pitchSprite.setOrigin(pitchSprite.getGlobalBounds().width / 2, pitchSprite.getGlobalBounds().height / 2);
-	pitchSprite.setScale(scalarY*0.152/3, scalarY*0.152 / 3);
-	pitchSprite.setPosition(scalarX * 33.5, float(m_window->getSize().y) * 0.92);
+	pitchSprite.setScale(float(scalarY*0.152/3), float(scalarY*0.152 / 3));
+	pitchSprite.setPosition(float(scalarX * 33.5), float(m_window->getSize().y) * 0.92f);
 
 	if (!yawTexture.loadFromFile("../resources/yaw.png"))
 	{
@@ -80,8 +80,8 @@ void Overlay::Setup(sf::RenderWindow &window)
 
 	yawSprite.setTexture(yawTexture);
 	yawSprite.setOrigin(yawSprite.getGlobalBounds().width / 2, yawSprite.getGlobalBounds().height / 2);
-	yawSprite.setScale(scalarY*0.152 / 3, scalarY*0.152 / 3);
-	yawSprite.setPosition(scalarX * 71.75, float(m_window->getSize().y) * 0.92);
+	yawSprite.setScale(float(scalarY*0.152 / 3), float(scalarY*0.152 / 3));
+	yawSprite.setPosition(scalarX * 71.75, float(m_window->getSize().y) * 0.92f);
 
 	if (!uiTexture.loadFromFile("../resources/UI.png"))
 	{
@@ -100,25 +100,6 @@ void Overlay::Setup(sf::RenderWindow &window)
 	text_velocity.setFillColor(sf::Color::Green);
 	text_velocity.setPosition(scalarX * 5, scalarY * 97);
 	text_velocity.setString("SPD:");
-
-
-	text_pitch.setFont(font);
-	text_pitch.setCharacterSize(30);
-	text_pitch.setFillColor(sf::Color::Green);
-	text_pitch.setPosition(scalarX * 46, scalarY * 87);
-	text_pitch.setString("PCH:");
-
-	text_yaw.setFont(font);
-	text_yaw.setCharacterSize(30);
-	text_yaw.setFillColor(sf::Color::Green);
-	text_yaw.setPosition(scalarX * 45.80, scalarY * 91);
-	text_yaw.setString("YAW:");
-
-	text_roll.setFont(font);
-	text_roll.setCharacterSize(30);
-	text_roll.setFillColor(sf::Color::Green);
-	text_roll.setPosition(scalarX * 46, scalarY * 95);
-	text_roll.setString("ROL:");
 
 	text_alt.setFont(font);
 	text_alt.setCharacterSize(m_window->getSize().y*0.065);

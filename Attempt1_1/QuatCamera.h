@@ -66,13 +66,13 @@ private:
 
 	inline float QuatCamera::DegToRad(float degrees)
 	{
-		float pi = PI;
+		float pi = (float)PI;
 		return degrees * (pi / 180);
 	}
 
 	inline float QuatCamera::RadToDeg(float rads)
 	{
-		float pi = PI;
+		float pi = (float)PI;
 		return rads * (180 / pi);
 	}
 };

@@ -1,3 +1,5 @@
+#pragma warning( disable : 4244 4101)  
+
 #include <glm\glm.hpp>
 #include <iostream>
 #include <cmath>
@@ -13,8 +15,6 @@
 #include "Skybox.h"
 #include "Ocean.h"
 
-
-
 int main()
 {
     sf::ContextSettings settings;
@@ -23,7 +23,7 @@ int main()
     settings.antialiasingLevel = 2;		// Request 2 levels of antialiasing
 
     // Use SFML to handle the window for us
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Fullscreen, settings);
+    sf::RenderWindow window(sf::VideoMode(1366,768), "Height Map Flight Sim", sf::Style::Fullscreen, settings);
 
     // initialise the menu (self contained render loop)
     Menu menu(window);
