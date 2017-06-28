@@ -96,7 +96,7 @@ void Overlay::Setup(sf::RenderWindow &window)
 
 
 	text_velocity.setFont(font);
-	text_velocity.setCharacterSize(60);
+	text_velocity.setCharacterSize(m_window->getSize().y*0.065);
 	text_velocity.setColor(sf::Color::Green);
 	text_velocity.setPosition(scalarX * 5, scalarY * 97);
 	text_velocity.setString("SPD:");
@@ -121,9 +121,9 @@ void Overlay::Setup(sf::RenderWindow &window)
 	text_roll.setString("ROL:");
 
 	text_alt.setFont(font);
-	text_alt.setCharacterSize(60);
+	text_alt.setCharacterSize(50);
 	text_alt.setColor(sf::Color::Green);
-	text_alt.setPosition(scalarX * 80, scalarY * 97);
+	text_alt.setPosition(scalarX * 82, scalarY * 97);
 	text_alt.setString("ALT:");
 
 }
@@ -190,9 +190,9 @@ void Overlay::Draw(sf::RenderWindow &window)
 	window.draw(yawSprite);
 	window.draw(uiSprite);
 	window.draw(text_velocity);
-	window.draw(text_pitch);
-	window.draw(text_yaw);
-	window.draw(text_roll);
+	//window.draw(text_pitch);
+	//window.draw(text_yaw);
+	//window.draw(text_roll);
 	window.draw(text_alt);
 }
 
