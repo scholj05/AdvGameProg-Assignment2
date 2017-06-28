@@ -30,8 +30,7 @@ int main()
     // initialise the menu (self contained render loop)
     Menu menu(window);
     // if the menu is closed, also close the window
-    if (!menu.Run())
-        window.close();
+	menu.Run();
 
     // nicest perspective correction calculations
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);

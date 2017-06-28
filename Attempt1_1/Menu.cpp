@@ -207,7 +207,7 @@ void Menu::Update()
 	}
 }
 
-bool Menu::Run()
+void Menu::Run()
 {
 	sf::Event menuEvent;
 	bool runMenu = true;
@@ -217,14 +217,9 @@ bool Menu::Run()
 		m_window->pollEvent(menuEvent);
 
 		if (menuEvent.type == sf::Event::Closed)
-			return false;
+			return;
 
 		Menu::Update();
-
-		if (menuEvent.key.code == sf::Keyboard::Escape)
-		{
-			return false;
-		}
 
 		if (menuEvent.key.code == sf::Keyboard::Return)
 		{
@@ -250,7 +245,7 @@ bool Menu::Run()
 					finalNumberGenSecond = (*it).menudata.GetSelection(1.0f);
 			}
 			finalOffset = 1.2f;
-			return true;
+			return;
 		}
 
 		if (menuEvent.type == sf::Event::MouseWheelMoved)
