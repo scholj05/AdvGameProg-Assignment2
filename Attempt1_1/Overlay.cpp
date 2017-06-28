@@ -12,9 +12,9 @@ void Overlay::Setup(sf::RenderWindow &window)
 
 	debug = false;
 	
-	if (!font.loadFromFile("../resources/arial.ttf"))
+	if (!font.loadFromFile("../resources/DS-DIGIT.TTF"))
 	{
-		printf("error loading font 'arial.ttf'");
+		printf("error loading font 'DS-DIGIT.TTF'");
 	}	
 
 	uiRect.setSize(sf::Vector2f((float)window.getSize().x / 10, (float)window.getSize().y / 10));
