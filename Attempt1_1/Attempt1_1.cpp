@@ -11,7 +11,6 @@
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
-#include "Vehicle.h"
 #include "Skybox.h"
 #include "Ocean.h"
 
@@ -84,12 +83,7 @@ int main()
 
 	Ocean ocean;
 	ocean.Setup(skybox.GetSize(), heightmap.GetOceanPoint());
-
-	// initialise the vehicle (object load)
-	Vehicle plane;
-	// run the loader with resource location
-	plane.LoadObjectFile("../resources/PaperAirplane.obj");
-
+	
 	// initialise the game overlay
 	Overlay gameOverlay;
 
@@ -226,12 +220,7 @@ int main()
 		glEnable(GL_PRIMITIVE_RESTART);
 		glPrimitiveRestartIndex(0xff);
 		heightmap.Render();
-
-		// draw the airplane
-		window.pushGLStates();
-		plane.Render();
-		window.popGLStates();
-
+		
 		// update game UI values
 		float mat[16];
 		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
