@@ -19,6 +19,7 @@ QuatCamera::QuatCamera(float positionX, float positionY, float positionZ, float 
 	MoveLeft(positionX, false);
 	MoveUp(positionY, false);
 	MoveForward(positionZ, false);
+	pitch = yaw = roll = 0;
 }
 
 void QuatCamera::Pitch(float pitchRadians, bool time) 
@@ -26,6 +27,7 @@ void QuatCamera::Pitch(float pitchRadians, bool time)
 	if (time) 
 		pitchRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(pitchRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+	pitch += RadToDeg(pitchRadians);
 }
 
 void QuatCamera::Yaw(float yawRadians, bool time) 
@@ -33,6 +35,7 @@ void QuatCamera::Yaw(float yawRadians, bool time)
 	if (time) 
 		yawRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(yawRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+	yaw += RadToDeg(yawRadians);
 }
 
 void QuatCamera::Roll(float rollRadians, bool time) 
@@ -40,6 +43,7 @@ void QuatCamera::Roll(float rollRadians, bool time)
 	if (time) 
 		rollRadians *= tickTime.getElapsedTime().asSeconds();
 	Rotate(rollRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+	roll += RadToDeg(rollRadians);
 }
 
 void QuatCamera::Turn(float turnRadians) 
@@ -128,3 +132,22 @@ float* QuatCamera::GetInverseViewMatrix()
 	return view;
 }
 
+float QuatCamera::GetPitch()
+{
+	return (int(pitch) % 360);
+}
+
+float QuatCamera::GetYaw()
+{
+	return (int(yaw) % 360);
+}
+
+float QuatCamera::GetRoll()
+{
+	return (int(roll) % 360);
+}
+
+float QuatCamera::GetAlt()
+{
+	return mPosition.y;
+}

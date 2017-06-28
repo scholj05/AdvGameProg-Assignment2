@@ -45,7 +45,11 @@ public:
 
 	float * GetInverseViewMatrix() ;
 
+	float GetPitch();
+	float GetYaw();
+	float GetRoll();
 
+	float GetAlt();
 
 
 
@@ -55,6 +59,8 @@ private:
 	glm::quat mOrientation;
 
 	sf::Clock tickTime;
+
+	float pitch, yaw, roll;
 
 	inline float QuatCamera::DegToRad(float degrees)
 	{

@@ -1,0 +1,10 @@
+﻿  Attempt1_1.cpp
+c:\temp\advgameprog-assignment2\attempt1_1\quatcamera.h(61): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\temp\advgameprog-assignment2\attempt1_1\quatcamera.h(67): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\temp\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\temp\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(118): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\temp\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(166): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\temp\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(167): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\temp\advgameprog-assignment2\attempt1_1\attempt1_1.cpp(121): warning C4101: 'mouse': unreferenced local variable
+  Attempt1_1.vcxproj -> C:\Temp\AdvGameProg-Assignment2\Debug\Attempt1_1.exe
+  Attempt1_1.vcxproj -> C:\Temp\AdvGameProg-Assignment2\Debug\Attempt1_1.pdb (Full PDB)

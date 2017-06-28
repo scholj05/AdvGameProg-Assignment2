@@ -14,6 +14,7 @@
 #include "Ocean.h"
 
 
+
 int main()
 {
     sf::ContextSettings settings;
@@ -132,6 +133,8 @@ int main()
 	rollDown = sf::Keyboard::Left;
 	halt = sf::Keyboard::Space;
 
+	float pitch, yaw, roll = 0;
+
 
     // Start game loop
     while (window.isOpen())
@@ -163,8 +166,10 @@ int main()
 
 				sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), window);
 			}
-				quatCamera.Roll(mouseDeltaX * 0.002, true);
-				quatCamera.Pitch(mouseDeltaY * 0.002, true);
+			
+			// use mouse input to move camera
+			quatCamera.Roll(mouseDeltaX * 0.002, true);
+			quatCamera.Pitch(-(mouseDeltaY * 0.002), true);
 
             // do input checks outside of sf event to avoid 'first key stutter'
             if ((sf::Keyboard::isKeyPressed(accelarate)))
@@ -245,6 +250,8 @@ int main()
             if (event.type == sf::Event::Closed
 				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 window.close();
+			if ((sf::Keyboard::isKeyPressed(sf::Keyboard::F1)))
+				gameOverlay.ToggleDebug();
         }
 
         //Prepare for drawing
@@ -280,7 +287,9 @@ int main()
         // update game UI values
         float mat[16];
         glGetFloatv(GL_MODELVIEW_MATRIX, mat);
-        gameOverlay.Update(mat[12], mat[13], mat[14], flightSpeed);
+		
+
+        gameOverlay.Update(mat[12], mat[13], mat[14], flightSpeed, 0 - (quatCamera.GetPitch()), quatCamera.GetYaw(), quatCamera.GetRoll(), quatCamera.GetAlt() - heightmap.GetOceanPoint());
     
         // draw the game UI
         window.pushGLStates();

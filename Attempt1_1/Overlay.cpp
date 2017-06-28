@@ -10,6 +10,8 @@ void Overlay::Setup(sf::RenderWindow &window)
 {
 	m_window = &window;
 
+	debug = false;
+	
 	if (!font.loadFromFile("../resources/arial.ttf"))
 	{
 		printf("error loading font 'arial.ttf'");
@@ -69,9 +71,44 @@ void Overlay::Setup(sf::RenderWindow &window)
 		m_window->getSize().x / uiSprite.getLocalBounds().width,
 		m_window->getSize().y / uiSprite.getLocalBounds().height
 	);
+
+	float scalarX = m_window->getSize().x / 100;
+	float scalarY = m_window->getSize().y / 100;
+
+	text_velocity.setFont(font);
+	text_velocity.setCharacterSize(60);
+	text_velocity.setColor(sf::Color::Green);
+	text_velocity.setPosition(scalarX * 5, scalarY * 97);
+	text_velocity.setString("SPD:");
+
+
+	text_pitch.setFont(font);
+	text_pitch.setCharacterSize(30);
+	text_pitch.setColor(sf::Color::Green);
+	text_pitch.setPosition(scalarX * 46, scalarY * 87);
+	text_pitch.setString("PCH:");
+
+	text_yaw.setFont(font);
+	text_yaw.setCharacterSize(30);
+	text_yaw.setColor(sf::Color::Green);
+	text_yaw.setPosition(scalarX * 45.80, scalarY * 91);
+	text_yaw.setString("YAW:");
+
+	text_roll.setFont(font);
+	text_roll.setCharacterSize(30);
+	text_roll.setColor(sf::Color::Green);
+	text_roll.setPosition(scalarX * 46, scalarY * 95);
+	text_roll.setString("ROL:");
+
+	text_alt.setFont(font);
+	text_alt.setCharacterSize(60);
+	text_alt.setColor(sf::Color::Green);
+	text_alt.setPosition(scalarX * 80, scalarY * 97);
+	text_alt.setString("ALT:");
+
 }
 
-void Overlay::Update(float x, float y, float z, float speed)
+void Overlay::Update(float x, float y, float z, float speed, float pitch, float yaw, float roll, float alt)
 {
 	float FPS = 1 / fpsClock.restart().asSeconds();
 	std::ostringstream fpsBuffer;
@@ -93,19 +130,52 @@ void Overlay::Update(float x, float y, float z, float speed)
 	std::ostringstream speedBuffer;
 	speedBuffer << speed;
 	text_speed.setString("Speed: " + (sf::String(speedBuffer.str())));
+
+	text_velocity.setString("SPD: " + (sf::String(speedBuffer.str())));
+
+	std::ostringstream pchBuffer;
+	pchBuffer << pitch;
+	text_pitch.setString("PCH: " + (sf::String(pchBuffer.str())));
+
+	std::ostringstream yawBuffer;
+	yawBuffer << yaw;
+	text_yaw.setString("YAW: " + (sf::String(yawBuffer.str())));
+
+	std::ostringstream rolBuffer;
+	rolBuffer << roll;
+	text_roll.setString("ROL: " + (sf::String(rolBuffer.str())));
+
+	std::ostringstream altBuffer;
+	altBuffer << alt;
+	text_alt.setString("ALT: " + (sf::String(altBuffer.str())));
 }
 
 void Overlay::Draw(sf::RenderWindow &window)
 {
-	window.draw(uiRect);
-	window.draw(text_fpsCount);
-	window.draw(text_xPos);
-	window.draw(text_yPos);
-	window.draw(text_zPos);
-	window.draw(text_speed);
+	if (debug)
+	{
+		window.draw(uiRect);
+		window.draw(text_fpsCount);
+		window.draw(text_xPos);
+		window.draw(text_yPos);
+		window.draw(text_zPos);
+		window.draw(text_speed);
+	}
 	window.draw(uiSprite);
+	window.draw(text_velocity);
+	window.draw(text_pitch);
+	window.draw(text_yaw);
+	window.draw(text_roll);
+	window.draw(text_alt);
 }
 
+void Overlay::ToggleDebug()
+{
+	if (debug)
+		debug = false;
+	else
+		debug = true;
+}
 
 Overlay::~Overlay()
 {
