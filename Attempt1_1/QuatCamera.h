@@ -45,6 +45,8 @@ public:
 
 	float * GetInverseViewMatrix() ;
 
+	glm::vec3 GetEulerAngles();
+
 	float GetPitch();
 	float GetYaw();
 	float GetRoll();

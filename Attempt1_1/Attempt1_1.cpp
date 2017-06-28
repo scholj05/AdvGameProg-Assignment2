@@ -289,7 +289,8 @@ int main()
         glGetFloatv(GL_MODELVIEW_MATRIX, mat);
 		
 
-        gameOverlay.Update(mat[12], mat[13], mat[14], flightSpeed, 0 - (quatCamera.GetPitch()), quatCamera.GetYaw(), quatCamera.GetRoll(), quatCamera.GetAlt() - heightmap.GetOceanPoint());
+		glm::vec3 eulers(quatCamera.GetEulerAngles());
+		gameOverlay.Update(mat[12], mat[13], mat[14], flightSpeed, eulers[2], eulers[1], eulers[0], quatCamera.GetAlt() - heightmap.GetOceanPoint());
     
         // draw the game UI
         window.pushGLStates();

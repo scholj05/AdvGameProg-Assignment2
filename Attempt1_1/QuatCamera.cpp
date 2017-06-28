@@ -132,6 +132,33 @@ float* QuatCamera::GetInverseViewMatrix()
 	return view;
 }
 
+glm::vec3 QuatCamera::GetEulerAngles()
+{
+	float * mat4 = GetViewMatrixAsArray();
+
+	if (mat4[0] == 1.0f)
+	{
+		yaw = atan2f(mat4[2], mat4[11]);
+		pitch = 0;
+		roll = 0;
+
+	}
+	else if (mat4[0] == -1.0f)
+	{
+		yaw = atan2f(mat4[2], mat4[11]);
+		pitch = 0;
+		roll = 0;
+	}
+	else
+	{
+
+		yaw = atan2(-mat4[8], mat4[0]);
+		pitch = asin(mat4[4]);
+		roll = atan2(-mat4[6], mat4[5]);
+	}
+	return glm::vec3(RadToDeg(pitch), RadToDeg(yaw), RadToDeg(roll));
+}
+
 float QuatCamera::GetPitch()
 {
 	return (fmod(pitch, 360));
