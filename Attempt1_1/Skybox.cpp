@@ -11,8 +11,9 @@ Skybox::~Skybox()
 {
 }
 
-void Skybox::Setup()
+void Skybox::Setup(float size)
 {
+	boxSize = size;
 	right.loadFromFile("../resources/skybox/right.png");
 	left.loadFromFile("../resources/skybox/left.png");
 	top.loadFromFile("../resources/skybox/top.png");
@@ -193,4 +194,12 @@ void Skybox::Render(float * matrix)
 	glEnd();
 
 	glEnable(GL_DEPTH_TEST);
+
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_CULL_FACE);
+}
+
+float Skybox::GetSize()
+{
+	return boxSize;
 }

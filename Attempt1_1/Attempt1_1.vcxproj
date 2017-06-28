@@ -153,6 +153,7 @@
     <ClInclude Include="HeightMap.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuData.h" />
+    <ClInclude Include="Ocean.h" />
     <ClInclude Include="Overlay.h" />
     <ClInclude Include="QuatCamera.h" />
     <ClInclude Include="Skybox.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuData.cpp" />
+    <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Overlay.cpp" />
     <ClCompile Include="QuatCamera.cpp" />
     <ClCompile Include="Skybox.cpp" />

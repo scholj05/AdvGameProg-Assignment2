@@ -26,7 +26,7 @@ MenuData::MenuData(DataType type, int arrayIndex)
 
 	case DataType::MinHeight: 
 	{
-		arrayLength = 6;
+		arrayLength = 13;
 		break;
 	}
 
