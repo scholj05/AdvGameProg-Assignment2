@@ -6,12 +6,10 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
-#include "Camera.h"
 #include "QuatCamera.h"
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
-#include "TGUIMenu.h"
 #include "Skybox.h"
 #include "Ocean.h"
 
@@ -29,7 +27,7 @@ int main()
 
     // initialise the menu (self contained render loop)
     Menu menu(window);
-    // if the menu is closed, also close the window
+    // loadup the settings menu
 	menu.Run();
 
     // nicest perspective correction calculations
@@ -94,13 +92,14 @@ int main()
     // initialise the (new) camera class with initial position/orientation values
     QuatCamera quatCamera(
         0.0f,												// position X
-        menu.finalMaxHeight,								// position Y (equal to maximum height of heightmap)
+        350.0,												// position Y (equal to maximum height of heightmap)
         -(menu.finalGridSize / 2 + 1),						// position Z (away from the heightmap by half the size of heightmap)
-        tan(menu.finalMaxHeight / menu.finalGridSize / 2),	// rotation X (angle towards centre of map)
+        0.0f,												// rotation X (angle towards centre of map)
         180.0f,												// rotation Y (turn around)
-        0.01f												// rotation Z (initialise a non-zero value)
+        0.00f												// rotation Z (initialise a non-zero value)
     );
 
+	gameOverlay.setPitch(quatCamera.GetPitch());
     // clock for use with key lockout
     sf::Clock keyTimeout;
 

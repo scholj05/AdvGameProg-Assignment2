@@ -221,6 +221,7 @@ void Menu::Run()
 
 		Menu::Update();
 
+
 		if (menuEvent.key.code == sf::Keyboard::Return)
 		{
 			for (std::list<Data>::iterator it = dataList.begin(); it != dataList.end(); ++it)
