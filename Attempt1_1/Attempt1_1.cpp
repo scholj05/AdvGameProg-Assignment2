@@ -27,9 +27,8 @@ int main()
 
     // initialise the menu (self contained render loop)
     Menu menu(window);
-    // if the menu is closed, also close the window
-    if (!menu.Run())
-        window.close();
+    // loadup the settings menu
+	menu.Run();
 
     // nicest perspective correction calculations
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -93,13 +92,14 @@ int main()
     // initialise the (new) camera class with initial position/orientation values
     QuatCamera quatCamera(
         0.0f,												// position X
-        menu.finalMaxHeight,								// position Y (equal to maximum height of heightmap)
+        350.0,												// position Y (equal to maximum height of heightmap)
         -(menu.finalGridSize / 2 + 1),						// position Z (away from the heightmap by half the size of heightmap)
-        tan(menu.finalMaxHeight / menu.finalGridSize / 2),	// rotation X (angle towards centre of map)
+        0.0f,												// rotation X (angle towards centre of map)
         180.0f,												// rotation Y (turn around)
-        0.01f												// rotation Z (initialise a non-zero value)
+        0.00f												// rotation Z (initialise a non-zero value)
     );
 
+	gameOverlay.setPitch(quatCamera.GetPitch());
     // clock for use with key lockout
     sf::Clock keyTimeout;
 

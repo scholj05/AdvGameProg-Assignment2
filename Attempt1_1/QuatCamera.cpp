@@ -134,17 +134,17 @@ float* QuatCamera::GetInverseViewMatrix()
 
 float QuatCamera::GetPitch()
 {
-	return (int(pitch) % 360);
+	return (fmod(pitch, 360));
 }
 
 float QuatCamera::GetYaw()
 {
-	return (int(yaw) % 360);
+	return (fmod(yaw, 360));
 }
 
 float QuatCamera::GetRoll()
 {
-	return (int(roll) % 360);
+	return (fmod(roll, 360));
 }
 
 float QuatCamera::GetAlt()

@@ -8,6 +8,8 @@ public:
 	Overlay();
 	~Overlay();
 
+	void setPitch(float p);
+
 	void Overlay::Setup(sf::RenderWindow &window);
 	void Overlay::Update(float x, float y, float z, float speed, float pitch, float yaw, float roll, float alt);
 	void Overlay::Draw(sf::RenderWindow &window);
@@ -25,6 +27,10 @@ private:
 	sf::Sprite uiSprite;
 	sf::Texture gyroTexture;
 	sf::Sprite gyroSprite;
+	sf::Texture pitchTexture;
+	sf::Sprite pitchSprite;
+	sf::Texture yawTexture;
+	sf::Sprite yawSprite;
 	sf::Text text_pitch, text_yaw, text_roll, text_velocity, text_alt;
 	bool debug;
 };

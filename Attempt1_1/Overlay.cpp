@@ -21,6 +21,9 @@ void Overlay::Setup(sf::RenderWindow &window)
 	uiRect.setPosition(0, 0);
 	uiRect.setFillColor(sf::Color::White);
 
+	float scalarX = m_window->getSize().x / 100;
+	float scalarY = m_window->getSize().y / 100;
+
 	float xStart = uiRect.getPosition().x;
 	float yStart = uiRect.getPosition().y;
 	float xPadding = uiRect.getSize().x / 10;
@@ -55,11 +58,30 @@ void Overlay::Setup(sf::RenderWindow &window)
 		printf("Could not load gyro.png");
 	}
 
+	gyroSprite.setTextureRect(sf::IntRect(710, 710, 180, 180));
+	gyroSprite.setOrigin(gyroSprite.getGlobalBounds().width / 2, gyroSprite.getGlobalBounds().height / 2);
 	gyroSprite.setTexture(gyroTexture);
-	gyroSprite.setScale(
-		m_window->getSize().x / uiSprite.getLocalBounds().width,
-		m_window->getSize().y / uiSprite.getLocalBounds().height
-	);
+	gyroSprite.setPosition(m_window->getSize().x / 2, m_window->getSize().y/100*94);
+
+	if (!pitchTexture.loadFromFile("../resources/pitch.png"))
+	{
+		printf("Could not load pitch.png");
+	}
+
+	pitchSprite.setTexture(pitchTexture);
+	pitchSprite.setOrigin(pitchSprite.getGlobalBounds().width / 2, pitchSprite.getGlobalBounds().height / 2);
+	pitchSprite.setScale(0.36, 0.36);
+	pitchSprite.setPosition(scalarX * 33.5, float(m_window->getSize().y) * 0.92);
+
+	if (!yawTexture.loadFromFile("../resources/yaw.png"))
+	{
+		printf("Could not load yaw.png");
+	}
+
+	yawSprite.setTexture(yawTexture);
+	yawSprite.setOrigin(yawSprite.getGlobalBounds().width / 2, yawSprite.getGlobalBounds().height / 2);
+	yawSprite.setScale(0.36, 0.36);
+	yawSprite.setPosition(scalarX * 71.75, float(m_window->getSize().y) * 0.92);
 
 	if (!uiTexture.loadFromFile("../resources/UI.png"))
 	{
@@ -72,8 +94,6 @@ void Overlay::Setup(sf::RenderWindow &window)
 		m_window->getSize().y / uiSprite.getLocalBounds().height
 	);
 
-	float scalarX = m_window->getSize().x / 100;
-	float scalarY = m_window->getSize().y / 100;
 
 	text_velocity.setFont(font);
 	text_velocity.setCharacterSize(60);
@@ -148,6 +168,10 @@ void Overlay::Update(float x, float y, float z, float speed, float pitch, float 
 	std::ostringstream altBuffer;
 	altBuffer << alt;
 	text_alt.setString("ALT: " + (sf::String(altBuffer.str())));
+
+	gyroSprite.setRotation(-roll);
+	pitchSprite.setRotation(pitch);
+	yawSprite.setRotation(yaw);
 }
 
 void Overlay::Draw(sf::RenderWindow &window)
@@ -161,6 +185,9 @@ void Overlay::Draw(sf::RenderWindow &window)
 		window.draw(text_zPos);
 		window.draw(text_speed);
 	}
+	window.draw(gyroSprite);
+	window.draw(pitchSprite);
+	window.draw(yawSprite);
 	window.draw(uiSprite);
 	window.draw(text_velocity);
 	window.draw(text_pitch);
@@ -180,3 +207,9 @@ void Overlay::ToggleDebug()
 Overlay::~Overlay()
 {
 }
+
+void Overlay::setPitch(float p)
+{
+	pitchSprite.setRotation(p);
+}
+

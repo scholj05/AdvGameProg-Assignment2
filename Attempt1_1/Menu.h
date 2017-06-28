@@ -16,7 +16,7 @@ public:
 
 	void Update();
 
-	bool Menu::Run();
+	void Menu::Run();
 
 	void Menu::HighlightSelection();
 
