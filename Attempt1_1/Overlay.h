@@ -21,6 +21,8 @@ private:
 
 	sf::Texture uiTexture;
 	sf::Sprite uiSprite;
+	sf::Texture gyroTexture;
+	sf::Sprite gyroSprite;
 	sf::Text text_pitch, text_yaw, text_roll, /*text_speed,*/ text_alt, 
 		data_pitch, data_yaw, data_roll, data_speed, data_alt;
 	sf::Text * texts;

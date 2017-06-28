@@ -149,7 +149,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="HeightMap.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuData.h" />
@@ -159,11 +158,9 @@
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="TGUIMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Attempt1_1.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuData.cpp" />
@@ -172,7 +169,6 @@
     <ClCompile Include="QuatCamera.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="TGUIMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -48,6 +48,17 @@ void Overlay::Setup(sf::RenderWindow &window)
 	text_zPos.setPosition(xStart + xPadding, yStart + (yPadding + 1) * 4);
 	text_speed.setPosition(xStart + xPadding, yStart + (yPadding + 1) * 5);
 
+	if (!gyroTexture.loadFromFile("../resources/gyro.png"))
+	{
+		printf("Could not load gyro.png");
+	}
+
+	gyroSprite.setTexture(gyroTexture);
+	gyroSprite.setScale(
+		m_window->getSize().x / uiSprite.getLocalBounds().width,
+		m_window->getSize().y / uiSprite.getLocalBounds().height
+	);
+
 	if (!uiTexture.loadFromFile("../resources/UI.png"))
 	{
 		printf("Could not load UI.png");

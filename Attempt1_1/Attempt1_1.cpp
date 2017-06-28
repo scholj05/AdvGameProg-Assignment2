@@ -6,12 +6,10 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/System.hpp"
 #include "SFML/OpenGL.hpp"
-#include "Camera.h"
 #include "QuatCamera.h"
 #include "HeightMap.h"
 #include "Overlay.h"
 #include "Menu.h"
-#include "TGUIMenu.h"
 #include "Skybox.h"
 #include "Ocean.h"
 
