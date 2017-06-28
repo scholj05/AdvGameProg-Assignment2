@@ -11,7 +11,7 @@ public:
 	Skybox();
 
 	~Skybox();
-
+	
 	void Skybox::Setup(float boxSize);
 
 	void Skybox::Render( float * matrix);

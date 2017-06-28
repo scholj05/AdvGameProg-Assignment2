@@ -5,8 +5,8 @@ Menu::Menu(sf::RenderWindow &window)
 {
 	m_window = &window;
 	
-	if (!textFont.loadFromFile("../resources/arial.ttf"))
-		printf("error loading font 'arial.ttf'");
+	if (!textFont.loadFromFile("../resources/TCM_____.TTF"))
+		printf("error loading font 'TCM_____.TTF'");
 
 	if (!backgroundTexture.loadFromFile("../resources/backgroundTexture.png"))
 		printf("error loading texture 'backgroundTexture.png'");
