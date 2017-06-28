@@ -8,11 +8,12 @@ Overlay::Overlay()
 
 void Overlay::Setup(sf::RenderWindow &window)
 {
+	m_window = &window;
+
 	if (!font.loadFromFile("../resources/arial.ttf"))
 	{
 		printf("error loading font 'arial.ttf'");
-	}
-
+	}	
 
 	uiRect.setSize(sf::Vector2f((float)window.getSize().x / 10, (float)window.getSize().y / 10));
 	uiRect.setPosition(0, 0);
@@ -46,6 +47,17 @@ void Overlay::Setup(sf::RenderWindow &window)
 	text_yPos.setPosition(xStart + xPadding, yStart + (yPadding + 1) * 3);
 	text_zPos.setPosition(xStart + xPadding, yStart + (yPadding + 1) * 4);
 	text_speed.setPosition(xStart + xPadding, yStart + (yPadding + 1) * 5);
+
+	if (!uiTexture.loadFromFile("../resources/UI.png"))
+	{
+		printf("Could not load UI.png");
+	}
+	
+	uiSprite.setTexture(uiTexture);
+	uiSprite.setScale(
+		m_window->getSize().x / uiSprite.getLocalBounds().width,
+		m_window->getSize().y / uiSprite.getLocalBounds().height
+	);
 }
 
 void Overlay::Update(float x, float y, float z, float speed)
@@ -80,6 +92,7 @@ void Overlay::Draw(sf::RenderWindow &window)
 	window.draw(text_yPos);
 	window.draw(text_zPos);
 	window.draw(text_speed);
+	window.draw(uiSprite);
 }
 
 

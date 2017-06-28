@@ -24,10 +24,10 @@ int main()
     settings.antialiasingLevel = 2;		// Request 2 levels of antialiasing
 
     // Use SFML to handle the window for us
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Close, settings);
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Height Map Flight Sim", sf::Style::Fullscreen, settings);
 
     // initialise the menu (self contained render loop)
-    TGUIMenu menu(window);
+    Menu menu(window);
     // if the menu is closed, also close the window
     if (!menu.Run())
         window.close();
@@ -49,7 +49,7 @@ int main()
     GLdouble fovY = 90;
     GLdouble aspect = float(float(window.getSize().x) / float(window.getSize().y)); // 16:9 ascpect ratio = 1.77
     GLdouble zNear = 1.0f;
-    GLdouble zFar = 1000000.0f;
+    GLdouble zFar = 250000.0f;
 
     const GLdouble pi = 3.1415926535897932384626433832795;
     GLdouble fW, fH;
@@ -113,56 +113,109 @@ int main()
     // value for holding distance travelled for each tick
     float flightSpeed = 100.0f;
     
+	// make cursor invisible
+	window.setMouseCursorVisible(false);
+	
+	// 
+	sf::Vector2f windowCenter(window.getSize().x / 2, window.getSize().y / 2);
+	
+	// pin mouse to center of the window
+	sf::Mouse mouse;
+	mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
+	
+	sf::Keyboard::Key accelarate, deccelarate, pitchUp, pitchDown, yawUp, yawDown, rollUp, rollDown, halt;
+	accelarate = sf::Keyboard::W;
+	deccelarate = sf::Keyboard::S;
+	pitchUp = sf::Keyboard::Down;
+	pitchDown = sf::Keyboard::Up;
+	yawUp = sf::Keyboard::D;
+	yawDown = sf::Keyboard::A;
+	rollUp = sf::Keyboard::Right;
+	rollDown = sf::Keyboard::Left;
+	halt = sf::Keyboard::Space;
+
+
     // Start game loop
     while (window.isOpen())
     {
-        // only update the camera if the window has focus (no uncontrolled flying if untabbed)
+		// only update the camera if the window has focus (no uncontrolled flying if untabbed)
         if (window.hasFocus())
         {
+			float mouseDeltaX = mouse.getPosition().x - windowCenter.x;
+			float mouseDeltaY = window.mapPixelToCoords(mouse.getPosition()).y - windowCenter.y;
+			
+			int maxX = window.getSize().x;
+			int maxY = window.getSize().y;
+
+			int mouseX = sf::Mouse::getPosition(window).x;
+			int mouseY = sf::Mouse::getPosition(window).y;
+
+			// restrict mouse to window bounds
+			if (mouseX < 0 || mouseY < 0 || mouseX > maxX || mouseY > maxY)
+			{
+				if (mouseX < 0)
+					mouseX = 0;
+				else if (mouseX > maxX)
+					mouseX = maxX;
+
+				if (mouseY < 0)
+					mouseY = 0;
+				else if (mouseY > maxY)
+					mouseY = maxY;
+
+				sf::Mouse::setPosition(sf::Vector2i(mouseX, mouseY), window);
+			}
+				quatCamera.Roll(mouseDeltaX * 0.002, true);
+				quatCamera.Pitch(mouseDeltaY * 0.002, true);
+
             // do input checks outside of sf event to avoid 'first key stutter'
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::W)))
+            if ((sf::Keyboard::isKeyPressed(accelarate)))
             {
                 if (flightSpeed < 1000.0f)
-                    flightSpeed += 10.0f;
+                    flightSpeed += 5.0f;
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::S)))
+            if ((sf::Keyboard::isKeyPressed(deccelarate)))
             {
                 if (flightSpeed > 100.1f)
-                    flightSpeed -= 10.0f;
+                    flightSpeed -= 5.0f;
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::A)))
+            if ((sf::Keyboard::isKeyPressed(yawDown)))
             {
                 quatCamera.Yaw(-1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::D)))
+            if ((sf::Keyboard::isKeyPressed(yawUp)))
             {
                 quatCamera.Yaw(1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
+            if ((sf::Keyboard::isKeyPressed(pitchDown)))
             {
+				mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
                 quatCamera.Pitch(1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
+            if ((sf::Keyboard::isKeyPressed(pitchUp)))
             {
-                quatCamera.Pitch(-1.0f, true);
+				mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
+				quatCamera.Pitch(-1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Left)))
+            if ((sf::Keyboard::isKeyPressed(rollDown)))
             {
-                quatCamera.Roll(-1.0f, true);
+				mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
+				quatCamera.Roll(-1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Right)))
+            if ((sf::Keyboard::isKeyPressed(rollUp)))
             {
-                quatCamera.Roll(1.0f, true);
+				mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
+				quatCamera.Roll(1.0f, true);
             }
 
-            if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
+            if ((sf::Keyboard::isKeyPressed(halt)))
             {
                 // lock movement boolean changes for 0.5 seconds upon trigger.
                 // (stops key spam negating original key press).
@@ -179,6 +232,9 @@ int main()
             //processing continual movement
             if (moveForward && !firstLoop)
                 quatCamera.MoveForward(flightSpeed, true);
+
+			// reset mouse back to middle of the screen
+			//mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
         }
         
         // disable the first-loop functions
@@ -189,7 +245,7 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed
-				|| event.KeyPressed == sf::Keyboard::Escape)
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 window.close();
         }
 

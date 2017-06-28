@@ -13,9 +13,16 @@ public:
 	void Overlay::Draw(sf::RenderWindow &window);
 
 private:
+	sf::RenderWindow * m_window;
 	sf::Font font;
 	sf::Text text_fpsCount, text_xPos, text_yPos, text_zPos, text_speed;
 	sf::RectangleShape uiRect;
 	sf::Clock fpsClock;
+
+	sf::Texture uiTexture;
+	sf::Sprite uiSprite;
+	sf::Text text_pitch, text_yaw, text_roll, /*text_speed,*/ text_alt, 
+		data_pitch, data_yaw, data_roll, data_speed, data_alt;
+	sf::Text * texts;
 };
 
