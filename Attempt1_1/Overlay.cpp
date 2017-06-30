@@ -150,7 +150,7 @@ void Overlay::Update(float x, float y, float z, float speed, float pitch, float 
 	altBuffer << alt;
 	text_alt.setString("ALT: " + (sf::String(altBuffer.str())));
 
-	gyroSprite.setRotation(-roll);
+	gyroSprite.setRotation(roll);
 	pitchSprite.setRotation(pitch);
 	yawSprite.setRotation(yaw);
 }

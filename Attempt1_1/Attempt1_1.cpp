@@ -23,7 +23,7 @@ int main()
     settings.antialiasingLevel = 2;		// Request 2 levels of antialiasing
 
     // Use SFML to handle the window for us
-    sf::RenderWindow window(sf::VideoMode(1366,768), "Height Map Flight Sim", sf::Style::Fullscreen, settings);
+    sf::RenderWindow window(sf::VideoMode(1366, 768), "Height Map Flight Sim", sf::Style::Titlebar, settings);
 
     // initialise the menu (self contained render loop)
     Menu menu(window);
@@ -120,7 +120,7 @@ int main()
 	
 	// pin mouse to center of the window
 	sf::Mouse mouse;
-	mouse.setPosition(window.mapCoordsToPixel(windowCenter), window);
+	mouse.setPosition(window.mapCoordsToPixel(sf::Vector2f(windowCenter.x, windowCenter.y)), window);
 	
 	sf::Keyboard::Key accelarate, deccelarate, pitchUp, pitchDown, yawUp, yawDown, rollUp, rollDown, halt;
 	accelarate = sf::Keyboard::W;
@@ -142,14 +142,15 @@ int main()
 		// only update the camera if the window has focus (no uncontrolled flying if untabbed)
         if (window.hasFocus())
         {
-			float mouseDeltaX = mouse.getPosition().x - windowCenter.x;
-			float mouseDeltaY = window.mapPixelToCoords(mouse.getPosition()).y - windowCenter.y;
+			int mouseX = sf::Mouse::getPosition(window).x;
+			int mouseY = sf::Mouse::getPosition(window).y;
+
+			float mouseDeltaX = mouseX - window.mapCoordsToPixel(windowCenter).x;
+			float mouseDeltaY = mouseY - window.mapCoordsToPixel(windowCenter).y;
 			
 			int maxX = window.getSize().x;
 			int maxY = window.getSize().y;
 
-			int mouseX = sf::Mouse::getPosition(window).x;
-			int mouseY = sf::Mouse::getPosition(window).y;
 
 			// restrict mouse to window bounds
 			if (mouseX < 0 || mouseY < 0 || mouseX > maxX || mouseY > maxY)
@@ -174,7 +175,7 @@ int main()
             // do input checks outside of sf event to avoid 'first key stutter'
             if ((sf::Keyboard::isKeyPressed(accelarate)))
             {
-                if (flightSpeed < 1000.0f)
+                if (flightSpeed < 5000.0f)
                     flightSpeed += 5.0f;
             }
 
